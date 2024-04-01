@@ -102,37 +102,37 @@ passes_romanceAcceptanceFilter = {
 
   NOT = {
     #Have I been blocked from targeting this character? #Permanent
-    scope:target = {
+    scope:recipient = {
       has_opinion_modifier = {
         modifier = seduce_permanent_blocker_opinion
-        target = scope:owner
+        target = scope:actor
       }
     }
     #Time-limited blocker
-    scope:target = {
+    scope:recipient = {
       has_opinion_modifier = {
         modifier = seduce_regular_cooldown_opinion
-        target = scope:owner
+        target = scope:actor
       }
     }
     #Have I already successfully romanced this person?
-    scope:target = { has_opinion_modifier = { modifier = romance_scheme_courtship_opinion target = scope:owner } }
+    scope:recipient = { has_opinion_modifier = { modifier = romance_scheme_courtship_opinion target = scope:actor } }
 
     #HARD-BLOCK: Incest Target is too young
-    guaranteed_under_20_incest_rejection_trigger = { TARGET = scope:target SEDUCER = scope:owner }
+    guaranteed_under_20_incest_rejection_trigger = { TARGET = scope:recipient SEDUCER = scope:actor }
 
     #We're already soulmates
-    scope:owner = { has_relation_soulmate = scope:target }
+    scope:actor = { has_relation_soulmate = scope:recipient }
 
     #You've been kicked out of bed
-    scope:owner = { has_character_modifier = rejected_from_marriage_bed_modifier is_spouse_of = scope:target  }
+    scope:actor = { has_character_modifier = rejected_from_marriage_bed_modifier is_spouse_of = scope:recipient  }
 
-    scope:target = { has_trait = intellect_bad_3 } # Implies a mental development level akin to an average child
-    scope:target = { has_trait = incapable }       # Bed-ridden at best, but in many cases comatose or in a vegetative state
+    scope:recipient = { has_trait = intellect_bad_3 } # Implies a mental development level akin to an average child
+    scope:recipient = { has_trait = incapable }       # Bed-ridden at best, but in many cases comatose or in a vegetative state
     
     # One of you is celibate
-    scope:owner  = { has_trait = celibate }
-    scope:target = { has_trait = celibate }
+    scope:actor  = { has_trait = celibate }
+    scope:recipient = { has_trait = celibate }
   }
 }
 

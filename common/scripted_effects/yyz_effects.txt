@@ -13,6 +13,19 @@ yyz_add_to_display_list = {
 #  }
 }
 
+yyz_schemeTarget_romance_effect = {
+    set_global_variable = { name = yyz_list_mode value = MAIN_SCHEME_TARGET }
+# filters
+    reset_filters = yes
+
+# sorts
+    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_REAL_AGE }
+    set_global_variable = { name = yyz_sort_desc          value = 0 }
+
+# generate list
+    yyz_generate_list = yes  
+}
+
 yyz_legendPromoter_effect = {
   set_global_variable = { name = yyz_list_mode value = MAIN_LEGEND_PROMOTER }
 # filters
@@ -180,7 +193,7 @@ yyz_generate_list = {
     8  = { generate_yyz_inspiration_list = yes }
     9  = { generate_yyz_schemeTarget_list = yes }
     10  = { generate_yyz_debutante_list = yes }
-#    11 = { generate_yyz_artifactHolder_list = yes }
+    11 = { generate_yyz_artifactHolder_list = yes }
     12 = { generate_yyz_fertility_list = yes }
     13 = { generate_yyz_legendPromoter_list = yes }
   }   
@@ -364,7 +377,7 @@ generate_yyz_criminalGold_list = {
   ordered_living_character = {
     limit = { 
       is_eligible_to_pull = yes       # able to be pulled into court via hooks or invite - checks range, spouse/consort/self not landed, not ruler, not child, not priest, not imprisoned
-      NOT = { liege = scope:actor }                              # not courtier of player
+#      NOT = { liege = scope:actor }                              # not courtier of player
       gold > 39                                                  # has gold
       passes_sexFilter = yes                                     # check for male/female as appropriate
       passes_nobilityFilter = yes                                # check for noble/lowborn/claims
@@ -469,53 +482,38 @@ generate_yyz_inspiration_list = {
 
 #######################################
 ## artifact holder list | mode = 11
-#generate_yyz_artifactHolder_list = {
+generate_yyz_artifactHolder_list = {
+  every_living_character = {
+    limit = {
+      has_any_artifact = yes
+      passes_sexFilter = yes                                     # check for male/female as appropriate
+      passes_nobilityFilter = yes                                # check for noble/lowborn/claims
+      passes_inviteFilter = { RECRUITER = scope:actor RECRUITEE = this }
+      passes_landedFilter = yes
+      any_character_artifact = {
+        passes_artifactType_filter      = yes
+        passes_artifactAttribute_filter = yes
+        passes_artifactRarity_filter    = yes
+      }
+    }
+    order_by = { value = yyz_sort_value }
+    max = 100
+    check_range_bounds = no
+
+    yyz_add_to_display_list = yes  # add valid characters to our display list
+  }
+}
+
+#passes_artifactType_filter = {
+#}
+
 #  any_artifact = {
 #    limit = {
-##      rarity > X
-##      category = ?
-##      has_artifact_feature = 
-##      has_artifact_feature_group =
-##      is_unique =
-#      artifact_owner = {
-#        in_diplomatic_range = root                                 # range check
-#        NOT = { in_prison = yes }                                  # not imprisoned
-#        is_living = yes                                            # is alive
-#      }
-#    } 
-#    order_by = {
-#      value = rarity
-#    }
-#    max = 100
-#    check_range_bounds = no
-#    save_scope_as = artifact_to_add
-## setup a variable on the character for the invitable flag
-#    artifact_owner = {
-#      save_scope_as = recipient
-#    
-#      remove_character_flag = yyz_canInvite
-#      set_variable = { name = iv value = yyz_inviteValue }
-#      if = {
-#        limit = {
-#          can_recruit_character_to_court_trigger = {
-#            RECRUITER = scope:actor
-#            RECRUITEE = scope:recipient
-#          }
-#          0 < yyz_inviteValue
-#        }
-#        add_character_flag = yyz_canInvite
-#      }
-#    }
-## end variable setup
-#    root = {
-#      debug_log = "+++ found somebody"
-#      add_to_variable_list = {
-#        name = yyz_list
-#        target = scope:artifact_to_add
-#      }
-#    }
-#  }
-#}
+#      rarity > X
+#      category = ?
+#      has_artifact_feature = 
+#      has_artifact_feature_group =
+#      is_unique =
 
 ######################################
 # fertility list | mode = 12
@@ -545,7 +543,6 @@ generate_yyz_fertility_list = {
 ######################################
 # schemeTarget list | mode = 9
 generate_yyz_schemeTarget_list = {
-  save_scope_as = owner
   ordered_living_character = {
     limit = {
       is_adult = yes                                             # is adult
@@ -560,7 +557,8 @@ generate_yyz_schemeTarget_list = {
     max = 150
     check_range_bounds = no
 
-    save_scope_as = target
+    save_scope_as = recipient
+#    set_variable = { name = yyz_romance value = yyz_romance_success_chance }
     if = {
       limit = { passes_romanceAcceptanceFilter = yes }
       yyz_add_to_display_list = yes  # add valid characters to our display list

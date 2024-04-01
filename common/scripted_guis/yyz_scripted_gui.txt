@@ -120,8 +120,8 @@ open_yyz_viceroy_list = {
     reset_filters = yes
 
 # sort defaults
-    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_AGE }
-    set_global_variable = { name = yyz_sort_desc          value = 0 }
+    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_REAL_AGE }
+    set_global_variable = { name = yyz_sort_desc          value = 1 }
 
 # generate list
     yyz_generate_list = yes  
@@ -184,7 +184,7 @@ open_yyz_dynasty_list = {
     reset_filters = yes
 
 # sort defaults
-    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_AGE }
+    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_REAL_AGE }
     set_global_variable = { name = yyz_sort_desc          value = 1 }
 
 # generate list
@@ -230,7 +230,7 @@ open_yyz_specialOrganizers_list = {
     reset_filters = yes
 
 # sort defaults
-    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_AGE }
+    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_HEALTH }
     set_global_variable = { name = yyz_sort_desc          value = 0 }
 
 # generate list
@@ -251,8 +251,8 @@ open_yyz_killTarget_list = {
     reset_filters = yes
 
 # sort defaults
-    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_AGE }
-    set_global_variable = { name = yyz_sort_desc          value = 0 }
+    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_REAL_AGE }
+    set_global_variable = { name = yyz_sort_desc          value = 1 }
 
 # generate list
     yyz_generate_list = yes  
@@ -275,9 +275,9 @@ open_yyz_courtPositions_list = {
     reset_filters = yes
 
 # sorts
-    set_global_variable = { name = yyz_sort_key             value = SORT_KEY_AGE }
+    set_global_variable = { name = yyz_sort_key             value = SORT_KEY_HEALTH }
 #    set_global_variable = { name = yyz_sort_key             value = SORT_KEY_TRAVEL_SPEED }
-    set_global_variable = { name = yyz_sort_desc            value = 0 }
+    set_global_variable = { name = yyz_sort_desc            value = 1 }
 
 # generate list
     yyz_generate_list = yes
@@ -343,8 +343,8 @@ open_yyz_inspiration_list = {
     reset_filters = yes
 
 # sorts
-    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_AGE }
-    set_global_variable = { name = yyz_sort_desc          value = 1 }
+    set_global_variable = { name = yyz_sort_key           value = SORT_KEY_HEALTH }
+    set_global_variable = { name = yyz_sort_desc          value = 0 }
 
 # generate list
     yyz_generate_list = yes  
@@ -372,8 +372,6 @@ open_yyz_fertility_list = {
     set_global_variable = { name = yyz_list_mode value = MAIN_FERTILITY }
 # filters
     reset_filters = yes
-#    set_variable = { name = yyz_filterFertility         value = 1 }
-#    set_variable = { name = yyz_filterRank              value = 0 }
 
 # sorts
     set_global_variable = { name = yyz_sort_key           value = SORT_KEY_HEALTH }
@@ -394,8 +392,6 @@ open_yyz_schemeTarget_list = {
     set_global_variable = { name = yyz_list_mode value = MAIN_SCHEME_TARGET }
 # filters
     reset_filters = yes
-#    set_variable = { name = yyz_filterFertility         value = 1 }
-#    set_variable = { name = yyz_filterRank              value = 0 }
 
 # sorts
     set_global_variable = { name = yyz_sort_key           value = SORT_KEY_ROMANCE_CHANCE }
@@ -437,4 +433,18 @@ open_yyz_legendPromoter_list = {
     yyz_legendPromoter_effect = yes 
   }
 }
+
+###################################################
+# used to control the visibility of the currency detail panel on the character display
+yyz_centerPanel = {
+  scope = player
+
+  is_shown = {
+    OR = { 
+      yyz_list_mode = MAIN_LEGEND_PROMOTER 
+      yyz_list_mode = MAIN_SCHEME_TARGET
+    }
+  }
+}
+
 

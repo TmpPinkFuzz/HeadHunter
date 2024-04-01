@@ -206,8 +206,8 @@ template filter_rank
   spacer = { size = { 6 0 } }
 }
 
-### LIST TEMPLATE
-types yyz_character_list_types {
+types yyz_ui_types {
+  
   type yyz_header_text = text_single {
     name = "header_text"
 
@@ -239,9 +239,7 @@ types yyz_character_list_types {
     size = { 32 32 }
 
     button = {
-     size = { 32 32 }
-#    button_icon = {
-#     icon = {
+      size = { 32 32 }
       block "icon" {
         texture = "gfx/interface/icons/flat_icons/dynasty.dds"
         size = { 32 32 }
@@ -253,13 +251,6 @@ types yyz_character_list_types {
     onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
     visible = "[ScriptedGui.IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
     down    = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-
-#    modify_texture = {
-#      name = "orange"
-#      texture = "gfx/interface/colors/orange.dds"
-#      blend_mode = colordodge
-#      alpha = "[Multiply_float(Multiply_float( IntToFloat(GetProgressBarValueMax( SiegeWindow.GetSiege.GetProgress, '(float)100' )), '(float)0.01'), Multiply_float( IntToFloat(GetProgressBarValueMax( SiegeWindow.GetSiege.GetProgress, '(float)100' )), '(float)0.005'))]"
-#    }
   }
 
   type yyz_button = button_standard_hover {
@@ -269,21 +260,112 @@ types yyz_character_list_types {
     down    = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
   }
 
-#    gfxtype = togglepushbuttongfx
-#    button_normal = {
-#      using = Animation_Glow_Pulse
-#      glow = {
-#        using = Color_Green
-#        using = Glow_Standard
-#        block "glow_radius"
-#        {
-#          glow_radius = 3
-#        }
-#      }
-#      alwaystransparent = no
-#      effectname = "NoHighlight"
-#      gfxtype = togglepushbuttongfx
-#      shaderfile = "gfx/FX/pdxgui_pushbutton.shader"
+  type HeadHunter_invoke_button = window {
+    movable = yes
+
+    block "position" {
+      parentanchor = bottom|right
+      position = { -10 -10 }
+    }
+
+    size = { 40 68 }
+    allow_outside = yes
+    visible = yes
+
+    HeadHunter_drag_icon = {
+      name = "HeadHunter_drag_icon"
+      parentanchor = bottom
+      position = { 5 -32 }
+
+      visible = no
+      using = Animation_ShowHide_Quick
+    }
+
+    using = Animation_ShowHide_Quick
+
+    onmousehierarchyenter = "[PdxGuiWidget.FindChild('HeadHunter_drag_icon').Show]"
+    onmousehierarchyleave = "[PdxGuiWidget.FindChild('HeadHunter_drag_icon').Hide]"
+
+    vbox = {
+      size = { 100% 100% }
+      expand = {}
+
+      parentanchor = bottom|right
+      allow_outside = yes
+
+      widget = {
+        name = "HeadHunter_invoke_button"
+        size = { 40 40 }
+
+        button_round = {
+          datacontext = "[GetScriptedGui('open_yyz_courtPositions_list')]"
+          onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+          size = { 100% 100% }
+
+          icon = {
+            texture = "gfx/interface/buttons/button_lifestyles_base.dds"
+            size = { 100% 100% }
+          }
+
+          icon = {
+            name = "progress_frame"
+            texture = "gfx/interface/progressbars/action_progress_frame.dds"
+            size = { 100% 100% }
+            parentanchor = center
+            alpha = 1.0
+          }
+          icon = {
+            texture = "gfx/interface/icons/lego.png"
+#            texture = "gfx/interface/icons/icon_group_of_characters.png"
+            size = { 32 32 }
+            parentanchor = center
+          }
+          tooltip = HeadHunter_invoke_button_tooltip
+          using = tooltip_e
+        }
+      }
+    }
+  }
+
+  type HeadHunter_drag_icon = widget {
+    size = { 32 32 }
+
+    line = {
+      from = { 6 12 }
+      to = { 24 12 }
+      using = HeadHunter_Drag_Line
+    }
+    line = {
+      from = { 6 15 }
+      to = { 24 15 }
+      using = HeadHunter_Drag_Line
+    }
+    line = {
+      from = { 6 18 }
+      to = { 24 18 }
+      using = HeadHunter_Drag_Line
+    }
+    line = {
+      from = { 6 21 }
+      to = { 24 21 }
+      using = HeadHunter_Drag_Line
+    }
+
+    tooltip = HeadHunter_drag_icons_tooltip
+    using = tooltip_ne
+  }
+}
+
+types yyz_vanilla_overrides {
+  type hboxEx = hbox {
+    layoutpolicy_horizontal = expanding
+    layoutpolicy_vertical = expanding
+  }
+
+  type vboxEx = vbox {
+    layoutpolicy_horizontal = expanding
+    layoutpolicy_vertical = expanding
+  }
 
   type yyz_vbox_character_list = vbox {
     name = "yyz_character_list"
@@ -325,85 +407,119 @@ types yyz_character_list_types {
           }
         }
       }
+      blockoverride "scrollbox_empty" { }
+    }
+  }
 
-      blockoverride "scrollbox_empty"
-      {
+  ##########################################################
+  # used by yyz_hbox_skills_grid
+  type yyz_skill_display_widget = widget {
+    size = { 32 25 }
+
+    text_single = {
+      parentanchor = center
+      margin_bottom = 4
+      align = center
+      block "skill_name" { text = "[Character.GetSkill( 'martial' )]" }
+    }
+  }
+
+  ##########################################################
+  # used by yyz_hbox_skills_grid
+  type yyz_vanilla_skill_display_widget = yyz_skill_display_widget {
+    background = { 
+      name = "skill_icon_bg"
+      texture = "gfx/interface/window_character/character_view_skills_bg.dds"
+      framesize = { 70 26 }
+      margin = { 5 0 }
+      block "frame_num" { frame = 5 }
+    }
+  }
+
+  ##########################################################
+  # skills grid colored stat display with prowess added
+  type yyz_hbox_skills_grid = hbox {
+    name = "yyz_skills_grid"
+    minimumsize = { 160 0 }
+
+    yyz_vanilla_skill_display_widget = { 
+      blockoverride "skill_name" { text = "[Character.GetSkill( 'diplomacy' )]" }
+      blockoverride "frame_num" { frame = 1 }
+    }
+    yyz_vanilla_skill_display_widget = { 
+      blockoverride "skill_name" { text = "[Character.GetSkill( 'martial' )]" }
+      blockoverride "frame_num" { frame = 2 }
+    }
+    yyz_vanilla_skill_display_widget = { 
+      blockoverride "skill_name" { text = "[Character.GetSkill( 'stewardship' )]" }
+      blockoverride "frame_num" { frame = 3 }
+    }
+    yyz_vanilla_skill_display_widget = { 
+      blockoverride "skill_name" { text = "[Character.GetSkill( 'intrigue' )]" }
+      blockoverride "frame_num" { frame = 4 }
+    }
+    yyz_vanilla_skill_display_widget = { 
+      blockoverride "skill_name" { text = "[Character.GetSkill( 'learning' )]" }
+      blockoverride "frame_num" { frame = 5 }
+    }
+    yyz_skill_display_widget = { 
+      blockoverride "skill_name" { text = "[Character.GetSkill( 'prowess' )]" }
+      background = {
+        name = "skill_icon_bg"
+        texture = "gfx/interface/window_character/character_view_prowess_bg.dds"
+        framesize = { 32 32 }
+        margin = { 4 0 }
       }
     }
   }
 
-  type yyz_hbox_skills_grid = hbox {
-    name = "yyz_skills_grid"
-    minimumsize = { 160 0 }
-    widget = {
-      size = { 32 25 }
+  #####################################################################################################################
+  # top line of character data, displays invite button, pin button, name, relationship, age, health, and skill values
+  #####################################################################################################################
+  type yyz_character_name_and_relation = hbox {
+    margin_left = 0
+    layoutpolicy_horizontal = expanding
+#              maximumsize = { 338 -1 }  # yyz - removed to get skill values and age/health hbox to align to far right
 
-      text_single = {
-        using = yyz_skill_grid_text
-        text = "[Character.GetSkill( 'diplomacy' )]"
-      }
-      background = { using = yyz_skill_grid_background block "bg" { frame = 1 } }
+    using = yyz_invite_button
+    using = yyz_pin_unpin
+
+    text_single = {
+      using = Font_Size_Medium
+      layoutpolicy_horizontal = expanding
+      align = nobaseline
+      text = "[Character.GetUINameNoTooltip]"
+      autoresize = no
+      fontsize_min = 14
     }
 
-    widget = {
-      size = { 32 25 }
+    block "character_relation"
+    {
+      hbox = {
+        visible = "[And(Character.HasRelationTo( GetPlayer ), Not(Character.IsPlayer))]"
+        text_single = {
+#                    text = "•"
+          align = nobaseline
+          margin = { 5 0 }
+        }
 
-      text_single = {
-        using = yyz_skill_grid_text
-        text = "[Character.GetSkill( 'martial' )]"
-      }
-      background = { using = yyz_skill_grid_background block "bg" { frame = 2 } }
-    }
-
-    widget = {
-      size = { 32 25 }
-
-      text_single = {
-        using = yyz_skill_grid_text
-        text = "[Character.GetSkill( 'stewardship' )]"
-      }
-      background = { using = yyz_skill_grid_background block "bg" { frame = 3 } }
-    }
-    
-    widget = {
-      size = { 32 25 }
-
-      text_single = {
-        using = yyz_skill_grid_text
-        text = "[Character.GetSkill( 'intrigue' )]"
-      }
-      background = { using = yyz_skill_grid_background block "bg" { frame = 4 } }
-    }
-
-    widget = {
-      size = { 32 25 }
-
-      text_single = {
-        using = yyz_skill_grid_text
-        text = "[Character.GetSkill( 'learning' )]"
-      }
-      background = { using = yyz_skill_grid_background block "bg" { frame = 5 } }
-    }
-
-    widget = {
-      size = { 32 25 }
-      text_single = {
-        using = yyz_skill_grid_text
-        text = "[Character.GetSkill( 'prowess' )]"
-        background = {
-          name = "skill_icon_bg"
-          texture = "gfx/interface/window_character/character_view_prowess_bg.dds"
-          framesize = { 32 32 }
-          margin = { 14 0 }
+        text_single = {
+          name = "character_relation"
+          text = "[Character.GetRelationToString( GetPlayer )]"
+          default_format = "#low"
+          align = nobaseline
+          fontsize_min = 14
+          max_width = 180
         }
       }
     }
+    expand = {}
   }
 
   type yyz_wide_character_hbox = hbox {
     ### character portrait
     layoutpolicy_horizontal = expanding
-    vbox = {
+    vbox = {                                           # left side - portrat
       layoutpolicy_vertical = expanding
       portrait_head_small = {}
     
@@ -411,25 +527,13 @@ types yyz_character_list_types {
     }
     block "button_content"
     {
-      hbox = {
-        layoutpolicy_horizontal = expanding
-        layoutpolicy_vertical = expanding
+      hboxEx = {
         margin_top = 2
-    
-        vbox = {
-          layoutpolicy_horizontal = expanding
-          layoutpolicy_vertical = expanding
-    
-          # Name and age
-          hbox = {
+        vboxEx = {           
+          hbox = {           # top line of item, contains invite button, pin, name, age, relationship, followed by the health, age, then skills display
             layoutpolicy_horizontal = expanding
             margin = { 0 1 }
-            margin_left = 0
-            margin_right = 0
-    
-            background = {
-              using = Background_Area_Characterlist
-            }
+            background = { using = Background_Area_Characterlist }
     
             background = {
               using = Background_Area_Dark
@@ -441,60 +545,15 @@ types yyz_character_list_types {
               }
             }
     
-            hbox = {
-              margin_left = 0
-              layoutpolicy_horizontal = expanding
-#              maximumsize = { 338 -1 }  # yyz - removed to get skill values and age/health hbox to align to far right
-    
-              using = yyz_invite_button
-              using = yyz_pin_unpin
-    
-              text_single = {
-                using = Font_Size_Medium
-                layoutpolicy_horizontal = expanding
-                align = nobaseline
-                text = "[Character.GetUINameNoTooltip]"
-                autoresize = no
-                fontsize_min = 14
-              }
-    
-              block "character_relation"
-              {
-                hbox = {
-                  visible = "[And(Character.HasRelationTo( GetPlayer ), Not(Character.IsPlayer))]"
-                  text_single = {
-#                    text = "•"
-                    align = nobaseline
-                    margin = { 5 0 }
-                  }
-    
-                  text_single = {
-                    name = "character_relation"
-                    text = "[Character.GetRelationToString( GetPlayer )]"
-                    default_format = "#low"
-                    align = nobaseline
-                    fontsize_min = 14
-                    max_width = 180
-                  }
-                }
-              }
-              expand = {}
-            }
-    
-            hbox = {
-              using = character_age_or_death_text
-            }
+            yyz_character_name_and_relation = { }            
+            hbox = { using = character_age_or_death_text }
     
             # Skills
             yyz_hbox_skills_grid = {}
           }
     
-          ### BOTTOM ROW ###
-          hbox = {
-            layoutpolicy_horizontal = expanding
-            layoutpolicy_vertical = expanding
-            
-            vbox = {
+          hboxEx = {   # bottom portion of item, contains CoA, traits, then a panel for faith, culture, and our additions
+            vbox = {   # CoA and traits                           
               layoutpolicy_horizontal = expanding
     
               block "additional_info_kill_list" {}
@@ -518,16 +577,21 @@ types yyz_character_list_types {
                 expand = {}
               }
             }
-            vbox = {
+            vbox = {    # center info panel
+              layoutpolicy_horizontal = preferred
+              text_single = { 
+                text = "[GuiScope.SetRoot( Character.MakeScope).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', Character.MakeScope ).ScriptValue('yyz_centerPanelValue')]%" 
+                fontsize = 18
+              }
+              tooltip = "[GuiScope.SetRoot( Character.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', Character.MakeScope ).GetScriptValueDesc('yyz_centerPanelValue')]"
+              visible = "[GetScriptedGui( 'yyz_centerPanel' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+            }
+            vboxEx = {
               datacontext = "[Scope.GetCharacter]"
-              layoutpolicy_horizontal = expanding
-              layoutpolicy_vertical = expanding
     
               block "bottom_right_box"
               {
-                hbox = {
-                  layoutpolicy_horizontal = expanding
-                  layoutpolicy_vertical = expanding
+                hboxEx = {
                   max_width = 180
                   background = {
                     using = Background_Area_Dark
@@ -536,14 +600,8 @@ types yyz_character_list_types {
                   }
 #                  yyz_widget_list_claims = {}
                   
-                  vbox = {
-                    # Religion and culture
-                    layoutpolicy_horizontal = expanding
-                    layoutpolicy_vertical = expanding
-                    
-                    hbox = {
-                      layoutpolicy_horizontal = expanding
-                      layoutpolicy_vertical = expanding
+                  vboxEx = {                                       # Religion and culture
+                    hboxEx = {
                       margin_left = 2
                       margin_right = 4
                       spacing = 2
@@ -863,7 +921,6 @@ types yyz_character_list_types {
     }
   }
   
-  
   type yyz_skillitem_sort_icon_below = icon {
     frame = "[BoolTo1And2(CharacterSelectionList.GetSortOrder)]"
     alwaystransparent = yes
@@ -999,10 +1056,10 @@ types yyz_character_list_types {
           datacontext = "[GetScriptedGui( 'yyz_sort_by_health' )]"
           name = "stat_health"
           blockoverride "custom_icon" {
-            texture = "gfx/interface/icons/modifiers/health_positive.dds"
+            texture = "gfx/interface/icons/character_status/icon_health.dds"
             size = { 28 28 }
           }
-          blockoverride "icon_framesize" { }
+          blockoverride "icon_framesize" { framesize = { 60 60 } }
           blockoverride "icon_frame" { }
         }
 
@@ -1076,117 +1133,11 @@ types yyz_character_list_types {
           datacontext = "[GetTraitForIndex(int32.GetInt)]"
           visible = "[Trait.IsValid]"
 
-          blockoverride "icon_size"
-          {
-            size = { 30 30 }
-          }
-
-          blockoverride "tooltip_placement"
-          {
-            using = tooltip_se
-          }
-
-          blockoverride "glow_radius"
-          {
-            glow_radius = 3
-          }
+          blockoverride "icon_size"         { size = { 30 30 }   }
+          blockoverride "tooltip_placement" { using = tooltip_se }
+          blockoverride "glow_radius"       { glow_radius = 3    }
         }
       }
     }
-  }
-
-  type HeadHunter_invoke_button = window {
-    movable = yes
-
-    block "position" {
-      parentanchor = bottom|right
-      position = { -10 -10 }
-    }
-
-    size = { 40 68 }
-    allow_outside = yes
-    visible = yes
-
-    HeadHunter_drag_icon = {
-      name = "HeadHunter_drag_icon"
-      parentanchor = bottom
-      position = { 5 -32 }
-
-      visible = no
-      using = Animation_ShowHide_Quick
-    }
-
-    using = Animation_ShowHide_Quick
-
-    onmousehierarchyenter = "[PdxGuiWidget.FindChild('HeadHunter_drag_icon').Show]"
-    onmousehierarchyleave = "[PdxGuiWidget.FindChild('HeadHunter_drag_icon').Hide]"
-
-    vbox = {
-      size = { 100% 100% }
-      expand = {}
-
-      parentanchor = bottom|right
-      allow_outside = yes
-
-      widget = {
-        name = "HeadHunter_invoke_button"
-        size = { 40 40 }
-
-        button_round = {
-          datacontext = "[GetScriptedGui('open_yyz_courtPositions_list')]"
-          onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-          size = { 100% 100% }
-
-          icon = {
-            texture = "gfx/interface/buttons/button_lifestyles_base.dds"
-            size = { 100% 100% }
-          }
-
-          icon = {
-            name = "progress_frame"
-            texture = "gfx/interface/progressbars/action_progress_frame.dds"
-            size = { 100% 100% }
-            parentanchor = center
-            alpha = 1.0
-          }
-          icon = {
-            texture = "gfx/interface/icons/lego.png"
-#            texture = "gfx/interface/icons/icon_group_of_characters.png"
-            size = { 32 32 }
-            parentanchor = center
-          }
-          tooltip = HeadHunter_invoke_button_tooltip
-          using = tooltip_e
-        }
-      }
-    }
-  }
-
-  type HeadHunter_drag_icon = widget {
-    size = { 32 32 }
-
-    line = {
-      from = { 6 12 }
-      to = { 24 12 }
-      using = HeadHunter_Drag_Line
-    }
-    line = {
-      from = { 6 15 }
-      to = { 24 15 }
-      using = HeadHunter_Drag_Line
-    }
-    line = {
-      from = { 6 18 }
-      to = { 24 18 }
-      using = HeadHunter_Drag_Line
-    }
-    line = {
-      from = { 6 21 }
-      to = { 24 21 }
-      using = HeadHunter_Drag_Line
-    }
-
-    tooltip = HeadHunter_drag_icons_tooltip
-    using = tooltip_ne
   }
 }

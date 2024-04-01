@@ -309,4 +309,154 @@ yyz_sort_value = {
   }
 }
 
-# yyz_content_mode = { value = 0 if = { limit = { exists = var:yyz_content_mode } add = var:yyz_content_mode } }
+yyz_centerPanelValue = {
+  value = 0
+  switch = {
+    trigger = yyz_list_mode
+    MAIN_SCHEME_TARGET   = { add = yyz_romance_success_chance }
+    MAIN_FERTILITY       = { }  # 12
+    MAIN_LEGEND_PROMOTER = { add = yyz_legendPromoter_accept_chance }  # 13
+  }
+}
+
+yyz_legendPromoter_accept_chance = {
+  value = -10
+
+  switch = {
+    trigger = scope:recipient.primary_title.tier
+    2 = { add = -5  desc = TIER_REASON_COUNT }
+    3 = { add = -10 desc = TIER_REASON_DUKE }
+    4 = { add = -20 desc = TIER_REASON_KING }
+    5 = { add = -30 desc = TIER_REASON_EMPEROR }
+  }
+  ##  Legend
+  # How cool is the legend?
+  if = {
+    limit = { scope:actor = { promoted_legend = { legend_quality = illustrious } } }
+    add = 10
+    desc = REASON_ILLUSTRIOUS_LEGEND
+  }
+  if = {
+    limit = { scope:actor = { promoted_legend = { legend_quality = mythical } } }
+    add = 20
+    desc = REASON_MYTHICAL_LEGEND
+  }
+  # Are you using a hook?
+  if = {
+    limit = { scope:hook ?= yes }
+    add = 100
+    desc = LEGEND_HOOK_USED
+  }
+  # Are you using Gold?
+  if = {
+    limit = { scope:gold_cost ?= yes }
+    add = 40
+    desc = TRADE_GOLD_FOR_BETTER_AI_ACCEPTANCE_TT
+  }
+  add = {
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 1
+			desc = AI_OPINION_REASON
+		}
+  }
+  ## Opinion
+  # Do they like you?
+  if = {
+    limit = { scope:recipient = { save_temporary_opinion_value_as = { name = character_opinion target = scope:actor } } }
+    add = scope:character_opinion
+    desc = AI_OPINION_REASON
+  }
+
+  ## Personality
+  # Are they ambitious?
+  if = {
+    limit = { scope:recipient = { has_trait = ambitious } }
+    add = -15
+    desc = DEMAND_SUBMISSION_RECIPIENT_IS_AMBITIOUS
+  }
+  # Are they content?
+  if = {
+    limit = { scope:recipient = { has_trait = content } }
+    add = 5
+    desc = DEMAND_SUBMISSION_RECIPIENT_IS_CONTENT
+  }
+  # Are they stubborn?
+  if = {
+    limit = { scope:recipient = { has_trait = stubborn } }
+    add = -10
+    desc = DEMAND_SUBMISSION_RECIPIENT_IS_STUBBORN
+  }
+  # Are they arrogant?
+  if = {
+    limit = { scope:recipient = { has_trait = arrogant } }
+    add = -10 
+    desc = DEMAND_SUBMISSION_RECIPIENT_IS_ARROGANT
+  }
+  # Are they humble?
+  if = {
+    limit = { scope:recipient = { has_trait = humble } }
+    add = 10
+    desc = DEMAND_SUBMISSION_RECIPIENT_IS_HUMBLE
+  }
+  # Are they trusting?
+  if = {
+    limit = { scope:recipient = { has_trait = trusting } }
+    add = 15
+    desc = DEMAND_SUBMISSION_RECIPIENT_IS_TRUSTING
+  }
+  # Are they paranoid?
+  if = {
+    limit = { scope:recipient = { has_trait = paranoid } }
+    add = -10
+    desc = DEMAND_SUBMISSION_RECIPIENT_IS_PARANOID
+  }
+  ## Dread
+  if = {
+    limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 1 } } }
+    add = intimidated_halved_reason_value
+    desc = INTIMIDATED_REASON
+  }
+  if = {
+    limit = { scope:recipient = { has_dread_level_towards = { target = scope:actor level = 2 } }  }
+    add = cowed_halved_reason_value
+    desc = COWED_REASON
+  }
+  ## War
+  if = {
+    limit = { scope:recipient = { is_at_war = yes } }
+    add = -50
+    desc = HOSTAGE_AT_WAR_REASON
+  }
+  ## Low Gold
+  if = {
+    limit = {
+      scope:actor.promoted_legend = { legend_quality = famed }
+      scope:recipient = { monthly_character_income < famed_legend_promoter_cost }
+    }
+    add = -100
+    desc = TOO_HIGH_PROMOTER_MAINTENANCE_REASON
+  }
+  if = {
+    limit = {
+      scope:actor.promoted_legend = { legend_quality = illustrious }
+      scope:recipient = { monthly_character_income < illustrious_legend_promoter_cost }
+    }
+    add = -100
+    desc = TOO_HIGH_PROMOTER_MAINTENANCE_REASON
+  }
+  if = {
+    limit = {
+      scope:actor.promoted_legend = { legend_quality = mythical }
+      scope:recipient = { monthly_character_income < mythical_legend_promoter_cost }
+    }
+    add = -100
+    desc = TOO_HIGH_PROMOTER_MAINTENANCE_REASON
+  }
+
+  max = 100
+  min = 0
+}
+  # text_single = { text = "[GuiScope.SetRoot( Character.MakeScope).AddScope( 'actor', GetPlayer.MakeScope ).ScriptValue('yyz_centerPanelValue')]" }
+  # yyz_content_mode = { value = 0 if = { limit = { exists = var:yyz_content_mode } add = var:yyz_content_mode } }
