@@ -79,6 +79,63 @@ passes_inviteFilter = {
   }
 }
 
+passes_rankFilter = {
+  highest_held_title_tier >= yyz_filterRank
+}
+
+passes_romanceRankFilter = {
+  OR = {
+    highest_held_title_tier >= yyz_filterRank
+    AND = { 
+      is_landed = no
+      is_married = yes
+      primary_spouse = {
+        is_alive = yes 
+        highest_held_title_tier >= yyz_filterRank 
+      }
+    }
+  }
+}
+
+passes_romanceAcceptanceFilter = {
+  yyz_romance_success_chance >= 100
+
+  NOT = {
+    #Have I been blocked from targeting this character? #Permanent
+    scope:target = {
+      has_opinion_modifier = {
+        modifier = seduce_permanent_blocker_opinion
+        target = scope:owner
+      }
+    }
+    #Time-limited blocker
+    scope:target = {
+      has_opinion_modifier = {
+        modifier = seduce_regular_cooldown_opinion
+        target = scope:owner
+      }
+    }
+    #Have I already successfully romanced this person?
+    scope:target = { has_opinion_modifier = { modifier = romance_scheme_courtship_opinion target = scope:owner } }
+
+    #HARD-BLOCK: Incest Target is too young
+    guaranteed_under_20_incest_rejection_trigger = { TARGET = scope:target SEDUCER = scope:owner }
+
+    #We're already soulmates
+    scope:owner = { has_relation_soulmate = scope:target }
+
+    #You've been kicked out of bed
+    scope:owner = { has_character_modifier = rejected_from_marriage_bed_modifier is_spouse_of = scope:target  }
+
+    scope:target = { has_trait = intellect_bad_3 } # Implies a mental development level akin to an average child
+    scope:target = { has_trait = incapable }       # Bed-ridden at best, but in many cases comatose or in a vegetative state
+    
+    # One of you is celibate
+    scope:owner  = { has_trait = celibate }
+    scope:target = { has_trait = celibate }
+  }
+}
+
 passes_organizerTraitsFilter = {
   OR = {
     AND = { root.var:yyz_filterOrgSiege  = 1  has_trait = military_engineer }
@@ -102,301 +159,29 @@ will_accept_invite_to_court = {
     RECRUITEE = $RECRUITEE$
   }
   0 < yyz_inviteValue
+#  0 < ai_accept:invite_to_court_interaction
 }
 
-can_be_archer = {
-  OR = { 
-    has_trait = forest_fighter
-    has_trait_xp = { trait = tourney_participant track = bow value >= 20 }
-  }
-}
-
-can_be_outrider = {
-  OR = { 
-    has_trait = open_terrain_expert
-    has_trait_xp = { trait = tourney_participant track = horse value >= 20 }
-  } 
-}
-
-can_be_pike_captain = {
+# for some reason this code copied pretty much verbatim from the base game fails
+dead_passes_legendPromoterFilter = {
+  scope:actor.promoted_legend.legend_owner ?= scope:actor
+  is_landed = yes                                                                                         # not the legend owner
+  age >= 12                                                                                               
+  is_physically_able = yes                                                                                # not incapable, etc
+  NOT = { scope:actor = scope:recipient }                                                                 # not myself  
+  NOT = { scope:recipient = { exists = promoted_legend } }                                                # not already promoting legend
   OR = {
-    has_trait = rough_terrain_expert   
-    has_trait_xp = { trait = tourney_participant track = foot value >= 20 }
-  }
-}
-
-can_be_skirmisher = {
-  OR = {
-    has_trait = jungle_stalker
-    has_trait = winter_soldier   
-    has_trait_xp = { trait = tourney_participant track = bow  value >= 20 } 
-    has_trait_xp = { trait = tourney_participant track = foot value >= 20 } 
-  } 
-}
-
-can_be_vanguard = {
-  OR = {
-    has_trait = athletic               
-    has_trait = strong           
-    has_trait = physique_good 
-    has_trait_xp = { trait = tourney_participant track = foot value >= 20 } 
-  }
-}
-
-can_be_lancer = {
-  AND = {
-    OR = { 
-      has_trait = aggressive_attacker 
-      has_trait_xp = { trait = tourney_participant track = horse value >= 20 }
-    }
-    culture ?= { 
-      OR = { 
-        has_innovation = innovation_arched_saddle 
-        has_cultural_tradition = tradition_caucasian_wolves 
-        has_cultural_tradition = tradition_roman_legacy 
-        has_innovation = innovation_valets 
-      } 
-    }
-  }
-}
-
-can_be_camelier = {
-  AND = {
-    OR = { 
-      has_trait_xp = { trait = tourney_participant track = horse value >= 20 } 
-      has_trait = desert_warrior 
-    }
-    culture ?= { has_innovation = innovation_war_camels }
-  }
-}
-
-can_be_crossbow_captain = {
-  AND = {
-    OR = { 
-      has_trait_xp = { trait = tourney_participant track = bow value >= 20 } 
-      has_trait = cautious_leader 
-    }
-    culture ?= { 
-      OR = { 
-        has_innovation = innovation_advanced_bowmaking 
-        has_innovation = innovation_repeating_crossbow 
+    scope:recipient.dynasty = scope:actor.dynasty                                                         # dynasty member
+    scope:recipient = { knows_language_of_culture = scope:actor.culture }                                 # shares language
+    scope:actor = { has_friendly_relationship_with_character_trigger = { CHARACTER = scope:recipient } }  # friend/lover/soulmate/etc
+    scope:recipient = {
+      any_character_to_title_neighboring_county = {
+        any_county_province = {
+          any_province_legend = {
+            this = scope:actor.promoted_legend
+          }
+        }
       }
     }
-  }
-}
-
-can_be_elephant_rider = {
-  AND = {
-    OR = {
-      has_trait_xp = {
-        trait = tourney_participant
-        track = horse
-        value >= 20
-      }
-      has_trait = jungle_stalker
-    }
-    culture ?= { has_innovation = innovation_elephantry }
-  }
-}
-
-can_be_horse_archer = {
-  AND = {
-    OR = { 
-      has_trait_xp = { trait = tourney_participant track = horse value >= 20 }  
-      has_trait_xp = { trait = tourney_participant track = bow   value >= 20 } 
-      has_trait = flexible_leader 
-    }
-    culture ?= { has_cultural_tradition = tradition_horse_lords }
-  }
-}
-
-can_be_besieger = {
-  AND = {
-    OR = { 
-      has_trait = military_engineer 
-      has_trait = logistician 
-    }
-    culture ?= { has_innovation = innovation_mangonel }
-  }
-}
-
-can_be_contender = {
-  OR = {
-    prowess >= 20
-    has_trait_xp = { trait = tourney_participant track = horse value >= 50 } 
-    has_trait_xp = { trait = tourney_participant track = bow   value >= 50 } 
-    has_trait_xp = { trait = tourney_participant track = foot  value >= 50 } 
-    has_trait_xp = { trait = tourney_participant track = wit   value >= 50 }
-  }
-}
-
-can_be_charmer = {
-  OR = {
-    has_trait = seducer
-    has_trait = lustful 
-  }
-}
-
-can_be_disciplinarian = {
-  OR = {
-    has_trait = stubborn  
-    has_trait = diligent  
-    has_trait = temperate  
-    has_trait = organizer  
-    has_trait = overseer 
-  }
-}
-
-can_be_idealist = {
-  OR = {
-    has_trait = compassionate  
-    has_trait = forgiving  
-    has_trait = trusting  
-    has_trait = generous 
-  }
-}
-
-can_be_marauder = {
-  OR = {
-    has_trait = sadistic
-    has_trait = callous  
-    has_trait = vengeful 
-  }
-}
-
-can_be_scoundrel = {
-  OR = {
-    has_trait = ambitious 
-    has_trait = greedy     
-    has_trait = deceitful  
-    has_trait = gregarious 
-    has_trait = adventurer 
-  }
-}
-
-can_be_stalwart = {
-  OR = {
-    has_trait = honest
-    has_trait = just
-    has_trait = patient
-    has_trait = loyal
-    has_trait = unyielding_defender 
-  }
-}
-
-can_be_thug = {
-  OR = {
-    has_trait = wrathful
-    has_trait = arbitrary
-    has_trait = impatient
-    has_trait = arrogant
-    has_trait = reaver 
-  }
-}
-
-can_be_valiant = {
-  OR = {
-    has_trait = brave
-    has_trait = berserker
-    has_trait = reckless 
-  }
-}
-
-can_be_fanatic = {             # ignoring same faith requirement since you can demand they convert
-  OR = {
-    has_trait = zealous
-    has_trait = holy_warrior
-  }
-}
-
-can_be_blademaster = {
-  OR = {
-    has_trait = lifestyle_blademaster
-    has_trait_xp = { trait = lifestyle_blademaster value >= 100 } 
-  }
-}
-
-can_be_huntmaster = {
-  has_trait = lifestyle_hunter 
-}
-
-can_be_master_of_revels = {
-  has_trait = lifestyle_reveler 
-}
-
-can_be_politicker = {
-  OR = {
-    diplomacy >= high_skill_rating
-    has_trait = diplomat 
-  }
-}
-
-can_be_tactician = {
-  OR = {
-    martial >= high_skill_rating
-    has_trait = strategist 
-  }
-} 
-
-can_be_reeve = {
-  OR = {
-    stewardship >= high_skill_rating
-    has_trait = administrator 
-  }
-}
-can_be_manipulator = {
-  OR = {
-    intrigue >= high_skill_rating
-    has_trait = schemer 
-  }
-}
-
-can_be_mentor = {
-  OR = {
-    learning >= high_skill_rating
-    has_trait = whole_of_body 
-  }
-}
-
-can_be_house_paragon = {
-   AND = { 
-     exists = house 
-     house = root.house 
-     NOT = { has_trait = denounced }
-  }
-}
-
-passes_accoladeFilter = {
-  AND = {
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_ARCHER }            can_be_archer = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_OUTRIDER }          can_be_outrider = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_PIKE_CAPTAIN }      can_be_pike_captain = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_SKIRMISHER }        can_be_skirmisher = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_VANGUARD }          can_be_vanguard = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_LANCER }            can_be_lancer = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_CAMELIER }          can_be_camelier = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_CROSSBOW_CAPTAIN }  can_be_crossbow_captain = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_ELEPHANT_RIDER }    can_be_elephant_rider = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_HORSE_ARCHER }      can_be_horse_archer = yes }
-    OR = { NOT = { root.var:yyz_modeAccolade_retinue = ACCOLADE_BESIEGER }          can_be_besieger = yes }
-    OR = { root.var:yyz_modeAccolade_contender = 0                                  can_be_contender = yes }
-    OR = { root.var:yyz_modeAccolade_charmer = 0                                    can_be_charmer = yes }
-    OR = { root.var:yyz_modeAccolade_disciplinarian = 0                             can_be_disciplinarian = yes }
-    OR = { root.var:yyz_modeAccolade_idealist = 0                                   can_be_idealist = yes }
-    OR = { root.var:yyz_modeAccolade_marauder = 0                                   can_be_marauder = yes }
-    OR = { root.var:yyz_modeAccolade_scoundrel = 0                                  can_be_scoundrel = yes }
-    OR = { root.var:yyz_modeAccolade_stalwart = 0                                   can_be_stalwart = yes }
-    OR = { root.var:yyz_modeAccolade_thug = 0                                       can_be_thug = yes }
-    OR = { root.var:yyz_modeAccolade_valiant = 0                                    can_be_valiant = yes }
-    OR = { root.var:yyz_modeAccolade_fanatic = 0                                    can_be_fanatic = yes }
-    OR = { root.var:yyz_modeAccolade_blademaster = 0                                can_be_blademaster = yes }
-    OR = { root.var:yyz_modeAccolade_huntmaster = 0                                 can_be_huntmaster = yes }
-    OR = { root.var:yyz_modeAccolade_master_of_revels = 0                           can_be_master_of_revels = yes }
-    OR = { root.var:yyz_modeAccolade_politicker = 0                                 can_be_politicker = yes }
-    OR = { root.var:yyz_modeAccolade_tactician = 0                                  can_be_tactician = yes }
-    OR = { root.var:yyz_modeAccolade_reeve = 0                                      can_be_reeve = yes }
-    OR = { root.var:yyz_modeAccolade_manipulator = 0                                can_be_manipulator = yes }
-    OR = { root.var:yyz_modeAccolade_mentor = 0                                     can_be_mentor = yes }
-    OR = { root.var:yyz_modeAccolade_house_paragon = 0                              can_be_house_paragon = yes }
   }
 }

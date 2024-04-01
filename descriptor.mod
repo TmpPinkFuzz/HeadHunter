@@ -1,7 +1,7 @@
-version="1.0.1"
+version="1.0.2"
 tags={
 	"Utilities"
 	"Character Interactions"
 }
 name="The Headhunter"
-supported_version="1.9.*"
+supported_version="1.12.*"

@@ -1,0 +1,1592 @@
+﻿
+########################################################################################
+# FILTER FUNCTIONS
+
+yyz_filterSexMale_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterSex = FILTER_SEX_FEMALE } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterSex VAL = FILTER_SEX_FEMALE }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterSexFemale_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterSex = FILTER_SEX_MALE } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterSex VAL = FILTER_SEX_MALE }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterWhereNot_toggle = {
+  scope = player
+
+  is_shown = { yyz_filterWhereNot = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterWhereNot }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterWhereRealm_toggle = {
+  scope = player
+
+  is_shown = { yyz_filterWhere = FILTER_WHERE_REALM }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterWhere VAL = FILTER_WHERE_REALM }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterWhereCourt_toggle = {
+  scope = player
+
+  is_shown = { yyz_filterWhere = FILTER_WHERE_COURT }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterWhere VAL = FILTER_WHERE_COURT }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterHooked_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterHooked = FILTER_HOOKED_NOT } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterHooked VAL = FILTER_HOOKED_HOOK }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterHookedNot_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterHooked = FILTER_HOOKED_HOOK } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterHooked VAL = FILTER_HOOKED_NOT }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterMaritalMarried_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterMarital = FILTER_MARITAL_UNMARRIED } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterMarital VAL = FILTER_MARITAL_UNMARRIED }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterMaritalUnmarried_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterMarital = FILTER_MARITAL_MARRIED } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterMarital VAL = FILTER_MARITAL_MARRIED }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterNobilityNoble_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterNobility = FILTER_NOBILITY_LOWBORN } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterNobility VAL = FILTER_NOBILITY_LOWBORN }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterNobilityLowborn_toggle = {
+  scope = player
+
+  is_shown = { NOT = { yyz_filterNobility = FILTER_NOBILITY_NOBLE } }
+
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_filterNobility VAL = FILTER_NOBILITY_NOBLE }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInvite_toggle = {
+  scope = player
+
+  is_shown = { yyz_filterInvite = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInvite }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterRank_count = {
+  scope = player
+
+  is_shown = { yyz_filterRank = FILTER_RANK_COUNT }
+
+  effect = {
+    set_global_variable = { name = yyz_filterRank value = FILTER_RANK_COUNT }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterRank_duke = {
+  scope = player
+
+  is_shown = { yyz_filterRank = FILTER_RANK_DUKE }
+
+  effect = {
+    set_global_variable = { name = yyz_filterRank value = FILTER_RANK_DUKE }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterRank_king = {
+  scope = player
+
+  is_shown = { yyz_filterRank = FILTER_RANK_KING }
+
+  effect = {
+    set_global_variable = { name = yyz_filterRank value = FILTER_RANK_KING }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterRank_emperor = {
+  scope = player
+
+  is_shown = { yyz_filterRank = FILTER_RANK_EMPEROR }
+
+  effect = {
+    set_global_variable = { name = yyz_filterRank value = FILTER_RANK_EMPEROR }
+    yyz_generate_list = yes  
+  }
+}
+
+
+yyz_filterInspirationWeapon_toggle = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationWeapon_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationArmor_toggle = {
+  scope = player
+  is_shown = { yyz_filterInspirationArmor = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationArmor_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationBook_toggle = {
+  scope = player
+  is_shown = { yyz_filterInspirationBook = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationBook_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationWeaver_toggle = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeaver = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationWeaver_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationArtisan_toggle = {
+  scope = player
+  is_shown = { yyz_filterInspirationArtisan = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationArtisan_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationSmith_toggle = {
+  scope = player
+  is_shown = { yyz_filterInspirationSmith = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationSmith_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationAlchemy_toggle = {
+  scope = player
+
+  is_shown = { yyz_filterInspirationAlchemy = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationAlchemy_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationAdventure_toggle = {
+  scope = player
+
+  is_shown = { yyz_filterInspirationAdventure = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationAdventure }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationAdventure_toggleOthers = {
+  scope = player
+  is_shown = { yyz_filterInspirationWeapon = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeapon }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArmor }
+    toggle_variable = { PRIMARY = yyz_filterInspirationBook }
+    toggle_variable = { PRIMARY = yyz_filterInspirationWeaver }
+    toggle_variable = { PRIMARY = yyz_filterInspirationArtisan }
+    toggle_variable = { PRIMARY = yyz_filterInspirationSmith }
+    toggle_variable = { PRIMARY = yyz_filterInspirationAlchemy }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterInspirationQuality_Local = {
+  scope = player
+
+  is_shown = { yyz_filterInspirationQuality = 0 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_filterInspirationQuality value = 0 }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationQuality_Low = {
+  scope = player
+
+  is_shown = { yyz_filterInspirationQuality = 8 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_filterInspirationQuality value = 8 }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationQuality_Medium = {
+  scope = player
+
+  is_shown = { yyz_filterInspirationQuality = 12 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_filterInspirationQuality value = 12 }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationQuality_High = {
+  scope = player
+  is_shown = { yyz_filterInspirationQuality = 16 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_filterInspirationQuality value = 16 }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterInspirationUnsponsored_toggle = {
+  scope = player
+  is_shown = { yyz_filterInspirationUnsponsored = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterInspirationUnsponsored }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterOrgSiege_toggle = {
+  scope = player
+  is_shown = { yyz_filterOrgSiege = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterOrgSiege }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterOrgLogi_toggle = {
+  scope = player
+  is_shown = { yyz_filterOrgLogi = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterOrgLogi }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterOrgReaver_toggle = {
+  scope = player
+  is_shown = { yyz_filterOrgReaver = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterOrgReaver }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterOrgWinter_toggle = {
+  scope = player
+  is_shown = { yyz_filterOrgWinter = 1 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterOrgWinter }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterOrgSpeed5 = {
+  scope = player
+  is_shown = { yyz_filterOrgSpeed = 30 }
+
+  effect = {
+    if = {
+      limit = { yyz_filterOrgSpeed = 30 }
+      set_variable = { name = yyz_filterOrgSpeed value = 0 }
+    }
+    else = {
+      set_variable = { name = yyz_filterOrgSpeed value = 30 }
+    }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterOrgSpeed10 = {
+  scope = player
+  is_shown = { yyz_filterOrgSpeed = 35 }
+
+  effect = {
+    if = {
+      limit = { yyz_filterOrgSpeed = 35 }
+      set_variable = { name = yyz_filterOrgSpeed value = 0 }
+    }
+    else = {
+      set_variable = { name = yyz_filterOrgSpeed value = 35 }
+    }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterOrgSpeed15 = {
+  scope = player
+  is_shown = { yyz_filterOrgSpeed = 40 }
+
+  effect = {
+    if = {
+      limit = { yyz_filterOrgSpeed = 40 }
+      set_variable = { name = yyz_filterOrgSpeed value = 0 }
+    }
+    else = {
+      set_variable = { name = yyz_filterOrgSpeed value = 40 }
+    }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterCriminal_toggle = {
+  scope = player
+  is_shown = { yyz_filterCriminal = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterCriminal }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterUnhealthy_toggle = {
+  scope = player
+  is_shown = { yyz_filterUnhealthy = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterUnhealthy }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterHeirless_toggle = {
+  scope = player
+  is_shown = { yyz_filterHeirless = 1 }
+
+  effect = {
+    toggle_variable = { PRIMARY = yyz_filterHeirless }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterAptitudeAverage = {
+  scope = player
+  is_shown = { yyz_filterAptitude = FILTER_APTITUDE_AVERAGE }
+
+  effect = {
+    set_global_variable = { name = yyz_filterAptitude value = FILTER_APTITUDE_AVERAGE }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterAptitudeGood = {
+  scope = player
+  is_shown = { yyz_filterAptitude = FILTER_APTITUDE_GOOD }
+
+  effect = {
+    set_global_variable = { name = yyz_filterAptitude value = FILTER_APTITUDE_GOOD }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_filterAptitudeExcellent = {
+  scope = player
+#  is_shown = { always = no }
+  is_shown = { yyz_filterAptitude = FILTER_APTITUDE_EXCELLENT }
+
+  effect = {
+    set_global_variable = { name = yyz_filterAptitude value = FILTER_APTITUDE_EXCELLENT }
+    yyz_generate_list = yes
+  }
+}
+
+#################################################################################
+# court positions
+#################################################################################
+yyz_modeCourtPosition_antiquarian = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_ANTIQUARIAN }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_ANTIQUARIAN }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_travel_leader = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_CARAVAN }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_CARAVAN }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_physician = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_PHYSICIAN }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_PHYSICIAN }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_cultural_emissary = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_CULTURAL_EMISSARY }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_CULTURAL_EMISSARY }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_keeper_of_swans = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_KEEPER_OF_SWANS }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_KEEPER_OF_SWANS }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_chief_qadi = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_QADI }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_QADI }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_garuda = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_GARUDA }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_GARUDA }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_gardener = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_GARDENER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_GARDENER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_lady_in_waiting = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_LADY_IN_WAITING }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_LADY_IN_WAITING }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_tutor = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_TUTOR }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_TUTOR }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_food_taster = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_FOOD_TASTER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_FOOD_TASTER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_master_of_horse = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_MASTER_OF_HORSE }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_MASTER_OF_HORSE }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_master_of_hunt = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_MASTER_OF_HUNT }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_MASTER_OF_HUNT }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_royal_architect = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_ARCHITECT }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_ARCHITECT }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_high_almoner = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_ALMONER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_ALMONER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_seneschal = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_SENESCHAL }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_SENESCHAL }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_cupbearer = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_CUPBEARER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_CUPBEARER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_chief_eunuch = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_EUNUCH }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_EUNUCH }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_jester = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_JESTER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_JESTER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_poet = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_POET }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_POET }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_musician = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_MUSICIAN }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_MUSICIAN }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_bodyguard = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_BODYGUARD }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_BODYGUARD }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_champion = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_CHAMPION }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_CHAMPION }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_executioner = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_EXECUTIONER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_EXECUTIONER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_artificer = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_ARTIFICER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_ARTIFICER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_court_cave_hermit = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_HERMIT }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_HERMIT }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_chronicler = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_CHRONICLER }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_CHRONICLER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_scholar = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_SCHOLAR }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_SCHOLAR }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_assassin = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_ASSASSIN }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_ASSASSIN }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeCourtPosition_wet_nurse = {
+  scope = player
+  is_shown = { yyz_modeCourtPosition = POSITION_WET_NURSE }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    set_variable = { name = yyz_modeCourtPosition value = POSITION_WET_NURSE }
+    yyz_generate_list = yes  
+  }
+}
+
+#################################################################################
+# sort header methods
+#################################################################################
+yyz_change_sort_order = {
+  scope = player
+  
+  is_shown = { yyz_sort_desc = 0 }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+
+  effect = {
+    toggle_global_variable = { PRIMARY = yyz_sort_desc }
+    yyz_generate_list = yes
+  }
+}
+
+yyz_sort_by_health = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_HEALTH }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = HEALTH DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_rank = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_RANK }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = RANK DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_age = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_REAL_AGE }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = REAL_AGE DEFAULT = 0 }
+  }
+}
+
+yyz_sort_by_diplomacy = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_DIPLOMACY }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = DIPLOMACY DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_martial = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_MARTIAL }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = MARTIAL DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_stewardship = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_STEWARDSHIP }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = STEWARDSHIP DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_intrigue = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_INTRIGUE }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = INTRIGUE DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_learning = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_LEARNING }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = LEARNING DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_prowess = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_PROWESS }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = PROWESS DEFAULT = 1  }
+  }
+}
+
+yyz_sort_by_all_stats = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_ALL_STATS }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = ALL_STATS DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_gold = {
+  scope = player
+
+  is_shown = { yyz_sort_key = SORT_KEY_GOLD }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = GOLD DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_prestige = {
+  scope = player
+
+  is_shown = { yyz_sort_key = SORT_KEY_PRESTIGE }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = PRESTIGE DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_piety = {
+  scope = player
+
+  is_shown = { yyz_sort_key = SORT_KEY_PIETY }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = PIETY DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_real_age = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_REAL_AGE }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = REAL_AGE DEFAULT = 0 }
+  }
+}
+
+yyz_sort_by_army_speed = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_ARMY_SPEED }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = ARMY_SPEED DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_travel_speed = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_TRAVEL_SPEED }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = TRAVEL_SPEED DEFAULT = 1 }
+  }
+}
+
+yyz_sort_by_travel_safety = {
+  scope = player
+  
+  is_shown = { yyz_sort_key = SORT_KEY_TRAVEL_SAFETY }
+  is_valid = { always = yes }
+  ai_is_valid = { always = no }
+  
+  effect = {
+    change_sort_key = { KEY = TRAVEL_SAFETY DEFAULT = 1 }
+  }
+}
+
+
+#################################################################################
+# accolade modes
+#################################################################################
+yyz_modeAccolade_retinue = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = 1 }
+  is_valid = { always = yes }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_retinue }
+  }
+}
+
+yyz_modeAccolade_archer = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_ARCHER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_ARCHER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_ARCHER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeAccolade_outrider = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_OUTRIDER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_OUTRIDER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_OUTRIDER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeAccolade_pike_captain = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_PIKE_CAPTAIN }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_PIKE_CAPTAIN } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_PIKE_CAPTAIN }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeAccolade_skirmisher = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_SKIRMISHER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_SKIRMISHER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_SKIRMISHER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeAccolade_vanguard = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_VANGUARD }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_VANGUARD } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_VANGUARD }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeAccolade_lancer = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_LANCER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_LANCER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_LANCER }
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_modeAccolade_camelier = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_CAMELIER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_CAMELIER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_CAMELIER }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_crossbow_captain = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_CROSSBOW_CAPTAIN }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_CROSSBOW_CAPTAIN } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_CROSSBOW_CAPTAIN }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_elephant_rider = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_ELEPHANT_RIDER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_ELEPHANT_RIDER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_ELEPHANT_RIDER }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_horse_archer = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_HORSE_ARCHER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_HORSE_ARCHER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_HORSE_ARCHER }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_besieger = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_retinue = ACCOLADE_BESIEGER }
+  is_valid = { OR = { yyz_modeAccolade_retinue = 1 yyz_modeAccolade_retinue = ACCOLADE_BESIEGER } }
+  
+  effect = {
+    toggle_variable_val = { PRIMARY = yyz_modeAccolade_retinue VAL = ACCOLADE_BESIEGER }
+    yyz_generate_list = yes
+  }
+}               
+
+yyz_modeAccolade_contender = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_contender = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_contender = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_contender }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_manipulator = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_manipulator = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_manipulator = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_manipulator }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_mentor = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_mentor = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_mentor = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_mentor }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_politicker = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_politicker = 1 }
+#  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_politicker = 1 } }
+  is_valid = { always = no }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_politicker }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_reeve = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_reeve = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_reeve = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_reeve }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_tactician = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_tactician = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_tactician = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_tactician }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_charmer = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_charmer = 1 }
+#  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_charmer = 1 } }
+  is_valid = { always = no }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_charmer }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_disciplinarian = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_disciplinarian = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_disciplinarian = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_disciplinarian }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_idealist = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_idealist = 1 }
+#  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_idealist = 1 } }
+  is_valid = { always = no }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_idealist }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_marauder = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_marauder = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_marauder = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_marauder }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_scoundrel = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_scoundrel = 1 }
+#  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_scoundrel = 1 } }
+  is_valid = { always = no }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_scoundrel }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_stalwart = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_stalwart = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_stalwart = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_stalwart }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_thug = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_thug = 1 }
+#  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_thug = 1 } }
+  is_valid = { always = no }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_thug }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_valiant = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_valiant = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_valiant = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_valiant }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_fanatic = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_fanatic = 1 }
+#  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_fanatic = 1 } }
+  is_valid = { always = no }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_fanatic }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_blademaster = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_blademaster = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_blademaster = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_blademaster }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_huntmaster = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_huntmaster = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_huntmaster = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_huntmaster }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_master_of_revels = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_master_of_revels = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_master_of_revels = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_master_of_revels }
+    yyz_generate_list = yes  
+  }
+}               
+
+yyz_modeAccolade_house_paragon = {
+  scope = player
+  
+  is_shown = { yyz_modeAccolade_house_paragon = 1 }
+  is_valid = { OR = { NOT = { yyz_modeAccolade_retinue = 1 } yyz_modeAccolade_house_paragon = 1 } }
+  
+  effect = {
+    toggle_variable = { PRIMARY = yyz_modeAccolade_house_paragon }
+    yyz_generate_list = yes  
+  }
+}

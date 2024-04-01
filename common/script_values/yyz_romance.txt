@@ -1,0 +1,570 @@
+﻿yyz_romance_success_chance = {
+#  scope:axxxctor = { save_scope_as = owner }
+#  scope:recipient = { 
+#    save_scope_as = target
+#    add = this.base_success_chance:court_scheme
+#  }
+  value = 0
+  min = 0
+  max = 100
+
+  # You got a wedding night memento
+  if = {
+    limit = { scope:owner = { exists = var:wnight_court_memento_var  var:wnight_court_memento_var = scope:target } }
+    add = 20
+    desc = "SCHEME_WNIGHT_COURT_MEMENTO"
+  }
+
+  if = {
+    limit = { scope:owner = { has_character_modifier = hopeless_romantic_modifier } }
+    add = 10
+    desc = hopeless_romantic_modifier
+  }
+  
+  #Language
+  if = {
+    limit = { scope:owner = { knows_language_of_culture = scope:target.culture } }
+    add = 5
+    desc = YOU_SPEAK_THE_LANGUAGE
+  }
+
+  #Gallant
+  if = {
+    limit = { scope:owner = { has_trait = gallant } }
+    add = 30
+    desc = "SCHEME_GALLANT_TRAIT"
+  }
+
+  #Beauty good
+  if = {
+    limit = { scope:owner = { has_trait = beauty_good_1 } }
+    add = 10
+    desc = "scheme_beauty_good_1"
+  }
+  if = {
+    limit = { scope:owner = { has_trait = beauty_good_2 } }
+    add = 15
+    desc = "scheme_beauty_good_2"
+  }
+  if = {
+    limit = { scope:owner = { has_trait = beauty_good_3 } }
+    add = 20
+    desc = "scheme_beauty_good_3"
+  }
+
+  #Physique good
+  if = {
+    limit = { scope:owner = { has_trait = physique_good_1 } }
+    add = 5
+    desc = "scheme_physique_good_1"
+  }
+  if = {
+    limit = { scope:owner = { has_trait = physique_good_2 } }
+    add = 10
+    desc = "scheme_physique_good_2"
+  }
+  if = {
+    limit = { scope:owner = { has_trait = physique_good_3 } }
+    add = 15
+    desc = "scheme_physique_good_3"
+  }
+
+  #Beauty bad
+  if = {
+    limit = { scope:owner = { has_trait = beauty_bad_1 } }
+    add = -10
+    desc = "scheme_beauty_bad_1"
+  }
+  if = {
+    limit = { scope:owner = { has_trait = beauty_bad_2 } }
+    add = -15
+    desc = "scheme_beauty_bad_2"
+  }
+  if = {
+    limit = { scope:owner = { has_trait = beauty_bad_3 } }
+    add = -20
+    desc = "scheme_beauty_bad_3"
+  }
+
+  #TARGET
+
+  #Does their spouse have a strong hook on them?
+  if = {
+    limit = {
+      scope:owner = { NOT = { is_consort_of = scope:target } }
+      scope:target = {
+        exists = primary_spouse
+        OR = {
+          primary_spouse = { has_strong_hook = scope:target }
+          has_trait = loyal
+        }
+      }
+    }
+    add = -100
+    desc = SCHEME_SEDUCE_SPOUSE_STRONG_HOOK_PENALTY
+  }
+
+  #Opinion of owner
+  add = yyz_romance_opinion_modifier_kludge
+
+  #Trait similitarity to owner
+  add = yyz_romance_compatibility_modifier_kludge
+
+#  if = {
+#    limit = { scope:target = { NOT = { is_theocratic_lessee = yes } }
+#    if = {
+#      limit = { scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = yes } #Rank tier difference (unlanded character)
+#      if = {  
+
+  #Rank tier difference (landed target/target whose liege doesn't care)
+  if = { #3 or more higher rank
+    limit = {
+      scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no  NOT = { is_theocratic_lessee = yes } }
+      scope:owner = { tier_difference = { target = scope:target value >= 3 } }
+    }
+    add = 20
+    desc = "HIGHER_RANK_THAN_SCHEME_TARGET"
+  }
+  if = { #2 higher rank
+    limit = {
+      scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no  NOT = { is_theocratic_lessee = yes } }
+      scope:owner = { tier_difference = { target = scope:target value = 2 } }
+    }
+    add = 10
+    desc = "HIGHER_RANK_THAN_SCHEME_TARGET"
+  }
+  if = { #1 higher rank
+    limit = {
+      scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no  NOT = { is_theocratic_lessee = yes } }
+      scope:owner = { tier_difference = { target = scope:target value = 1 } }
+    }
+    add = 5
+    desc = "HIGHER_RANK_THAN_SCHEME_TARGET"
+  }
+  if = { #1 lower rank
+    limit = {
+      scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no  NOT = { is_theocratic_lessee = yes } }
+      scope:owner = { tier_difference = { target = scope:target value = -1 } }
+    }
+    add = -5
+    desc = "LOWER_RANK_THAN_SCHEME_TARGET"
+  }
+  if = { #2 lower rank
+    limit = {
+      scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no  NOT = { is_theocratic_lessee = yes } }
+      scope:owner = { tier_difference = { target = scope:target value = -2 } }
+    }
+    add = -10
+    desc = "LOWER_RANK_THAN_SCHEME_TARGET"
+  }
+  if = { #3 or less lower rank
+    limit = {
+      scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = no  NOT = { is_theocratic_lessee = yes } }
+      scope:owner = { tier_difference = { target = scope:target value <= -3 } }
+    }
+    add = -20
+    desc = "LOWER_RANK_THAN_SCHEME_TARGET"
+  }
+
+  #Rank tier difference (unlanded character)
+  if = { #3 or more higher rank
+    limit = {
+      scope:target = { personal_scheme_success_compare_target_liege_tier_trigger = yes  NOT = { is_theocratic_lessee = yes } }
+      scope:owner = { tier_difference = { target = scope:target.liege value >= 3 } }
+    }
+    add = 50
+    desc = "HIGHER_RANK_THAN_SCHEME_TARGET_LIEGE"
+  }
+  if = {
+    limit = {
+   #2 higher rank
+      scope:target = {
+        personal_scheme_success_compare_target_liege_tier_trigger = yes
+        NOT = {
+          is_theocratic_lessee = yes
+        }
+      }
+      scope:owner = {
+        tier_difference = {
+          target = scope:target.liege
+          value = 2
+        }
+      }
+    }
+    add = 25
+    desc = "HIGHER_RANK_THAN_SCHEME_TARGET_LIEGE"
+  }
+  if = {
+    limit = {
+   #1 higher rank
+      scope:target = {
+        personal_scheme_success_compare_target_liege_tier_trigger = yes
+        NOT = {
+          is_theocratic_lessee = yes
+        }
+      }
+      scope:owner = {
+        tier_difference = {
+          target = scope:target.liege
+          value = 1
+        }
+      }
+    }
+    add = 10
+    desc = "HIGHER_RANK_THAN_SCHEME_TARGET_LIEGE"
+  }
+  if = {
+    limit = {
+   #1 lower rank
+      scope:target = {
+        personal_scheme_success_compare_target_liege_tier_trigger = yes
+      }
+      scope:owner = {
+        tier_difference = {
+          target = scope:target.liege
+          value = -1
+        }
+      }
+    }
+    add = -10
+    desc = "LOWER_RANK_THAN_SCHEME_TARGET_LIEGE"
+  }
+  if = {
+    limit = {
+   #2 lower rank
+      scope:target = {
+        personal_scheme_success_compare_target_liege_tier_trigger = yes
+      }
+      scope:owner = {
+        tier_difference = {
+          target = scope:target.liege
+          value = -2
+        }
+      }
+    }
+    add = -25
+    desc = "LOWER_RANK_THAN_SCHEME_TARGET_LIEGE"
+  }
+  if = {
+    limit = {
+   #3 or less lower rank
+      scope:target = {
+        personal_scheme_success_compare_target_liege_tier_trigger = yes
+      }
+      scope:owner = {
+        tier_difference = {
+          target = scope:target.liege
+          value <= -3
+        }
+      }
+    }
+    add = -50
+    desc = "LOWER_RANK_THAN_SCHEME_TARGET_LIEGE"
+  }
+
+  # Diarchs are better at schemes within their liege's realm
+#  diarch_scheming_within_realm_bonus_modifier = yes
+
+  #Gubermint difference
+  if = {
+    limit = {
+   #3 or more higher rank
+      exists = scope:target.court_owner
+      scope:target.court_owner = {
+        NOT = { government_has_flag = government_is_tribal }
+      }
+      scope:owner = { government_has_flag = government_is_tribal }
+    }
+    add = -50
+    desc = "TRIBE_ROMANCING_OTHER_GOVERNMENTS"
+  }
+
+  #Religious Heads
+  if = {
+    limit = {
+      scope:target = {
+        faith = scope:owner.faith
+        faith = {
+          exists = religious_head
+          religious_head = {
+             this = scope:target
+           }
+        }
+      }
+    }
+    add = -50
+    desc = "SCHEME_VS_RELIGIOUS_HEAD"
+  }
+
+  #Taboo
+  if = {
+    limit = {
+   #Incest is taboo (norms & consequences)
+      scope:target = {
+        relation_with_character_is_incestuous_in_my_or_lieges_faith_trigger = { CHARACTER = scope:owner }
+      }
+      scope:owner = {
+        # The Subtle Desire Perk nullifies this
+        NOT = { has_perk = subtle_desire_perk }
+        # being already a lover with the target nulifies it
+        NOT = { has_relation_lover = scope:target }
+      }
+    }
+    add = -25
+    desc = SCHEME_SEDUCE_TABOO_INCEST
+  }
+  if = {
+    limit = {
+   #Character is not willing to engage in incest with scope:owner
+      scope:target = {
+        NOT = {
+          is_consort_of = scope:owner
+        }
+        is_close_or_extended_family_of = scope:owner
+        NOR = {
+          accepts_incest_with_trigger = { CHARACTER = scope:owner } #100% fine with incest with owner
+          scope:owner = { has_perk = subtle_desire_perk }  # The Subtle Desire Perk nullifies this
+          guaranteed_under_20_incest_rejection_trigger = { # handled by hard block modifier
+            TARGET = scope:target
+            SEDUCER = scope:owner
+          }
+        }
+      }
+    }
+    add = {
+      if = {
+        limit = { scope:target = { is_close_family_of = scope:owner } }
+        value = -40
+      }
+      else_if = {
+        limit = { scope:target = { is_extended_family_of = scope:owner } }
+        value = -15
+      }
+      if = {
+        limit = { scope:target = { is_deviant_trigger = yes } }
+        add = 15
+      }
+    }
+    desc = SCHEME_SEDUCE_UNWILLING_INCEST
+  }
+  if = {
+    limit = {
+   #Sodomy
+      scope:target = {
+        relation_with_character_is_sodomy_in_my_or_lieges_faith_trigger = { CHARACTER = scope:owner }
+        NOT = { freely_accepts_sodomy_with_trigger = { CHARACTER = scope:owner } }
+      }
+    }
+    add = -20
+    desc = SCHEME_SEDUCE_TABOO_SODOMY
+  }
+  
+  if = {
+    limit = {
+   # Tradition
+      scope:owner = {
+        has_trait = poet
+        culture = {
+          has_cultural_parameter = poet_trait_romance_bonuses
+        }
+      }
+    }
+    add = 40
+    desc = SCHEME_TRAIT_POET
+  }
+
+  # Courtship Perk
+  if = {
+    limit = {
+      scope:owner = {
+        has_perk = courtship_perk
+      }
+    }
+    add = courtship_court_success_chance_bonus_value
+    desc = SCHEME_COURTSHIP_PERK
+  }
+
+  # Dynasty Kin Personal Scheme Success Chance on Dynasty Perk
+  if = {
+    limit = {
+      exists = scope:owner.dynasty
+      scope:owner.dynasty = {
+        has_dynasty_perk = kin_legacy_4
+      }
+      scope:target.dynasty = scope:owner.dynasty
+    }
+    add = kin_legacy_4_success_chance
+    desc = KIN_LEGACY_DESC
+  }
+
+  # House Personal Scheme Success Chance on Cultural Parameter
+  if = {
+    limit = {
+      exists = scope:owner.house
+      exists = scope:target.house
+      scope:owner.culture = { has_cultural_parameter = cultural_house_personal_scheme_success_chance }
+      scope:target.house = scope:owner.house
+    }
+    add = cultural_house_personal_scheme_success_chance
+    desc = KIN_PARAMETER_DESC
+  }
+
+  # House Personal Scheme Success Chance on Cultural Parameter
+  if = {
+    limit = {
+      exists = scope:owner.house
+      exists = scope:target.house
+      scope:owner.culture = { has_cultural_parameter = cultural_house_personal_scheme_success_chance }
+      scope:target.house = scope:owner.house
+    }
+    add = cultural_house_personal_scheme_success_chance
+    desc = KIN_PARAMETER_DESC
+  }
+
+  # Spouse Scheme Success Chance on Cultural Parameter
+  if = {
+    limit = {
+      scope:owner = { is_spouse_of = scope:target }
+      scope:owner.culture = { has_cultural_parameter = romance_scheme_bonus_vs_spouse }
+    }
+    add = 30
+    desc = SPOUSE_PARAMETER_DESC
+  }
+
+  # Thicker Than Water Perk
+  if = {
+    limit = {
+      scope:owner = { has_perk = thicker_than_water_perk }
+      scope:target = { is_close_or_extended_family_of = scope:owner }
+    }
+    add = thicker_than_water_bonus
+    desc = BEFRIEND_THICKER_THAN_WATER_PERK_DESC
+  }
+
+  #Family Feud
+#  house_feud_sway_scheme_success_modifier = yes
+
+# yyz - not in court_scheme script but needed
+
+# poet trait for owner
+  if = {
+    limit = { scope:owner = { has_trait = poet } }
+    add = 10
+#    desc = SCHEME_TRAIT_POET_PERSONAL_SCHEME_BONUS
+  }
+
+# paranoid trait for target
+  if = {
+    limit = { scope:target = { has_trait = paranoid } }
+    add = -25
+#    desc = SCHEME_TRAIT_PARANOID_PENALTY
+  }
+}
+
+#  opinion_modifier = {
+#    who = scope:target            = this
+#    opinion_target = scope:owner  = prev
+#    min = -50
+#    max = 50
+#    multiplier = 1.5
+#    step = 5
+yyz_romance_opinion_modifier_kludge = {
+  value = 0
+  scope:target = {
+    if = { limit = { opinion = { target = scope:owner value >=  34 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=  30 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=  27 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=  24 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=  20 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=  17 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=  14 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=  10 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=   7 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value >=   4 } } add =  5 }
+    if = { limit = { opinion = { target = scope:owner value <= -34 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <= -30 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <= -27 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <= -24 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <= -20 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <= -17 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <= -14 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <= -10 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <=  -7 } } add = -5 }
+    if = { limit = { opinion = { target = scope:owner value <=  -4 } } add = -5 }
+  }
+}
+
+#  compatibility_modifier = {
+#    who = scope:target
+#    compatibility_target = scope:owner
+#    min = -100
+#    max = 80
+#    multiplier = 3
+#  }
+yyz_romance_compatibility_modifier_kludge = {
+  value = 0
+  scope:target = {
+    if = { limit = { trait_compatibility = { target = scope:owner value < -33 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -33 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -32 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -31 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -30 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -29 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -28 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -27 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -26 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -25 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -24 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -23 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -22 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -21 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -20 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -19 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -18 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -17 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -16 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -15 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -14 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -13 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -12 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -11 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value < -10 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -9 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -8 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -7 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -6 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -5 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -4 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -3 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -2 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value <  -1 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value =  -1 } } add = -3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value =   1 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  26 } } add =  2 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  25 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  24 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  23 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  22 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  21 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  20 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  19 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  18 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  17 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  16 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  15 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  14 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  13 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  12 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  11 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >  10 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   9 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   8 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   7 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   6 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   5 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   4 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   3 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   2 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:owner value >   1 } } add =  3 }
+  }
+}

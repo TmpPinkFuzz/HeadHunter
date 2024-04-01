@@ -1,9 +1,15 @@
 ﻿
 widget = {
   name = "yyz_cmd_buttons"
-  size = { 0 0 }
-  visible = "[IsDefaultGUIMode]"
-  layer = bottom
+  layer = windows_layer
+  allow_outside = yes
+  visible = yes
+  parentanchor = bottom|right
+
+  HeadHunter_invoke_button = {
+    position = { -630 -5 }
+  }
+
 
 ##########################################################################################
 # main entry point for base mod that doesn't require updating shortcuts - overrides the 
@@ -12,10 +18,12 @@ widget = {
 
   # mode 6 - invisible shortcut button for Court Positions
   yyz_character_list_shortcut = {
+
     name = "shortcut_main"
     blockoverride "command"  { datacontext = "[GetScriptedGui('open_yyz_courtPositions_list')]" }
     blockoverride "cmd_key"  { shortcut = "redo" }
   }
+
 
 ##########################################################################################
 # base entry points for all the buttons in the UI
@@ -61,6 +69,17 @@ widget = {
     blockoverride "command" { datacontext = "[GetScriptedGui('open_yyz_inspiration_list')]" }
     blockoverride "cmd_key" { shortcut = "yyz_inspiration_cmd" }
   }
+
+  # mode 9 - invisible shortcut button for schemeTarget list
+  yyz_character_list_shortcut = {
+    blockoverride "command"  { datacontext = "[GetScriptedGui('open_yyz_schemeTarget_list')]" }
+    blockoverride "cmd_key"  { shortcut = "yyz_schemeTarget_cmd" }
+  }
+  # mode 9 - invisible shortcut button for debutante list
+  yyz_character_list_shortcut = {
+    blockoverride "command"  { datacontext = "[GetScriptedGui('open_yyz_debutante_list')]" }
+    blockoverride "cmd_key"  { shortcut = "yyz_debutante_cmd" }
+  }
   
   # mode 12 - invisible shortcut button for fertility list
   yyz_character_list_shortcut = {
@@ -68,6 +87,11 @@ widget = {
     blockoverride "cmd_key"  { shortcut = "yyz_fertility_cmd" }
   }
 
+  # mode 13 - invisible shortcut button for legendPromoto list
+  yyz_character_list_shortcut = {
+    blockoverride "command"  { datacontext = "[GetScriptedGui('open_yyz_legendPromoter_list')]" }
+    blockoverride "cmd_key"  { shortcut = "yyz_legendPromoter_cmd" }
+  }
 
 ##########################################################################################
 # specialty entry points for existing modes with different filter and/or sort presets
@@ -105,13 +129,13 @@ widget = {
     name = "yyz_quicksave"
   
     onclick = "[ExecuteConsoleCommand('save quicksave')]"
-    shortcut = "yyz_quicksave_cmd"
+    shortcut = "cmd_quicksave"
   }
   # 0 size button for shortcut to work
   button_normal = {
     name = "yyz_quickload"
   
     onclick = "[ExecuteConsoleCommand('load quicksave')]"
-    shortcut = "yyz_quickload_cmd"
+    shortcut = "cmd_quickload"
   }
 }

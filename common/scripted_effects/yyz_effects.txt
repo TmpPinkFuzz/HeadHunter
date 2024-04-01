@@ -8,13 +8,23 @@ yyz_add_to_display_list = {
 #    limit = {
 #      always = yes
 #    }
-    root = {
-      add_to_variable_list = {
-        name = yyz_list
-        target = scope:recipient
-      }
+    root = { add_to_variable_list = { name = yyz_list target = scope:recipient }
     }
 #  }
+}
+
+yyz_legendPromoter_effect = {
+  set_global_variable = { name = yyz_list_mode value = MAIN_LEGEND_PROMOTER }
+# filters
+  reset_filters = yes
+  set_variable = { name = yyz_filterRank              value = FILTER_RANK_KING }
+
+# sorts
+  set_global_variable = { name = yyz_sort_key           value = SORT_KEY_RANK }
+  set_global_variable = { name = yyz_sort_desc          value = 1 }
+
+# generate list
+  yyz_generate_list = yes  
 }
 
 reset_filters = {
@@ -34,6 +44,13 @@ reset_filters = {
   set_variable = { name = yyz_filterUnhealthy         value = 0 }
   set_variable = { name = yyz_filterCriminal          value = 0 }
   set_variable = { name = yyz_filterHeirless          value = 0 }
+
+  set_global_variable = { name = yyz_filterRank       value = FILTER_RANK_KING }
+
+#  set_variable = { name = yyz_filterScheme            value = FILTER_SCHEME_ROMANCE }
+#  set_variable = { name = yyz_filterXXX          value = 0 }
+#  set_variable = { name = yyz_filterXXX          value = 0 }
+
 
   set_variable = { name = yyz_filterInspirationWeapon    value = 1 }       
   set_variable = { name = yyz_filterInspirationArmor     value = 1 }       
@@ -161,8 +178,11 @@ yyz_generate_list = {
     6  = { generate_yyz_courtPositions_list = yes }
     7  = { generate_yyz_criminalGold_list = yes }
     8  = { generate_yyz_inspiration_list = yes }
+    9  = { generate_yyz_schemeTarget_list = yes }
+    10  = { generate_yyz_debutante_list = yes }
 #    11 = { generate_yyz_artifactHolder_list = yes }
     12 = { generate_yyz_fertility_list = yes }
+    13 = { generate_yyz_legendPromoter_list = yes }
   }   
   set_variable = { name = yyz_listGenerated value = 1 }
   debug_log = "*** yyz_generate_list - setFlag ***"
@@ -224,7 +244,7 @@ generate_yyz_knight_list = {
     limit = {
       can_be_combatant_based_on_gender_trigger = { ARMY_OWNER = root }  # eliminates women if they cannot serve due to culture/faith
       is_eligible_to_pull = yes       # able to be pulled into court via hooks or invite - checks range, spouse/consort/self not landed, not ruler, not child, not priest, not imprisoned
-      NOT = { liege = scope:actor }   # not courtier of player
+#      NOT = { liege = scope:actor }   # not courtier of player
       NOT = { is_knight_of = root }   # not already one of our knights
       age < 41                        # not over 40 TODO: move to filter
 # filters
@@ -296,32 +316,36 @@ generate_yyz_courtPositions_list = {
       passes_maritalFilter = yes      # check for married/unmarried as requested by player
       passes_inviteFilter = { RECRUITER = scope:actor RECRUITEE = this }
       OR = {
-        AND = { root.var:yyz_modeCourtPosition = 1  antiquarian_aptitude   >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 2  travel_leader_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 3  court_physician_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 4  cultural_emissary_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 5  keeper_of_swans_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 6  chief_qadi_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 7  garuda_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 8  court_gardener_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 9  lady_in_waiting_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 10 court_tutor_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 11 food_taster_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 12 master_of_horse_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 13 master_of_hunt_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 14 royal_architect_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 15 high_almoner_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 16 seneschal_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 17 cupbearer_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 18 chief_eunuch_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 19 court_jester_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 20 court_poet_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 21 court_musician_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 22 bodyguard_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 23 champion_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 24 executioner_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 25 court_artificer_aptitude >= 80 }
-        AND = { root.var:yyz_modeCourtPosition = 26 court_cave_hermit_aptitude >= 80 }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_ANTIQUARIAN       antiquarian_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_CARAVAN           travel_leader_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_PHYSICIAN         court_physician_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_CULTURAL_EMISSARY cultural_emissary_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_KEEPER_OF_SWANS   keeper_of_swans_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_QADI              chief_qadi_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_GARUDA            garuda_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_GARDENER          court_gardener_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_LADY_IN_WAITING   lady_in_waiting_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_TUTOR             court_tutor_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_FOOD_TASTER       food_taster_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_MASTER_OF_HORSE   master_of_horse_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_MASTER_OF_HUNT    master_of_hunt_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_ARCHITECT         royal_architect_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_ALMONER           high_almoner_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_SENESCHAL         seneschal_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_CUPBEARER         cupbearer_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_EUNUCH            chief_eunuch_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_JESTER            court_jester_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_POET              court_poet_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_MUSICIAN          court_musician_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_BODYGUARD         bodyguard_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_CHAMPION          champion_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_EXECUTIONER       executioner_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_ARTIFICER         court_artificer_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_HERMIT            court_cave_hermit_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_CHRONICLER        chronicler_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_SCHOLAR           court_scholar_aptitude >= yyz_filterAptitude }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_WET_NURSE         wet_nurse_aptitude >= yyz_filterAptitude is_female = yes }
+        AND = { root.var:yyz_modeCourtPosition = POSITION_ASSASSIN          master_assassin_aptitude >= yyz_filterAptitude }
       }
     }
     order_by = { value = yyz_sort_value }
@@ -342,15 +366,33 @@ generate_yyz_criminalGold_list = {
       is_eligible_to_pull = yes       # able to be pulled into court via hooks or invite - checks range, spouse/consort/self not landed, not ruler, not child, not priest, not imprisoned
       NOT = { liege = scope:actor }                              # not courtier of player
       gold > 39                                                  # has gold
+      passes_sexFilter = yes                                     # check for male/female as appropriate
+      passes_nobilityFilter = yes                                # check for noble/lowborn/claims
       passes_inviteFilter = { RECRUITER = scope:actor RECRUITEE = this }
-      OR = { root.var:yyz_filterUnhealthy = 0  health < 2.8 }
+      OR = { root.var:yyz_filterUnhealthy = 0  
+        OR = { 
+          health < 1.2  
+          AND = {           # only show diseased/wounded if they are VERY low on health
+            health < 2.5
+            OR = {
+              age > 45
+              has_trait = cancer
+              has_trait = dysentery
+              has_trait = smallpox
+              has_trait = typhus
+              has_trait = bubonic_plague
+            }                   
+          } 
+        }
+      }
       OR = { root.var:yyz_filterCriminal  = 0  scope:actor = { has_imprisonment_reason = prev } }
       OR = { root.var:yyz_filterHeirless  = 0
         AND = {
           NOT = { any_sibling = { is_alive = yes } }                 # no living siblings
           NOT = { any_child =   { is_alive = yes } }                 # no living children
           NOT = { any_parent =  { is_alive = yes } }                 # no living parents
-          fertility <= 0
+          NOT = { has_trait = devoted }                              # can't land them if they are monks/nuns
+          OR = { fertility <= 0 AND = { is_female = no NOT = { exists = primary_spouse } } }  # fertility either 0 or unmarried male
         }
       }
     }
@@ -370,7 +412,7 @@ generate_yyz_inspiration_list = {
     limit = { 
       is_eligible_to_pull = yes       # able to be pulled into court via hooks or invite - checks range, spouse/consort/self not landed, not ruler, not child, not priest, not imprisoned
 
-#      NOT = { has_character_flag = yyz_ignore_inspiration }       # not already ignored
+      NOT = { has_character_flag = uimod_ignore_inspiration }       # not already ignored
       OR = { root.var:yyz_filterInspirationQuality = 0 NOT = { has_character_flag = local_artisan } }  # filter local artisans if local filter is set
       OR = { root.var:yyz_filterInspirationUnsponsored = 0  NOT = { inspiration = { exists = inspiration_sponsor } } }
 
@@ -499,14 +541,83 @@ generate_yyz_fertility_list = {
   }
 }
 
+
 ######################################
-# secrets list | mode = 13
+# schemeTarget list | mode = 9
+generate_yyz_schemeTarget_list = {
+  save_scope_as = owner
+  ordered_living_character = {
+    limit = {
+      is_adult = yes                                             # is adult
+      is_attracted_to_gender_of = scope:actor
+      is_imprisoned = no                                       # either not imprisoned
+      in_diplomatic_range = scope:actor
+
+      passes_romanceRankFilter = yes
+    }
+##      NOT = { has_council_position = councillor_court_chaplain } # no priests
+    order_by = { value = yyz_sort_value }
+    max = 150
+    check_range_bounds = no
+
+    save_scope_as = target
+    if = {
+      limit = { passes_romanceAcceptanceFilter = yes }
+      yyz_add_to_display_list = yes  # add valid characters to our display list
+    }
+  }
+}
+
+######################################
+# debutante list | mode = 10
+generate_yyz_debutante_list = {
+  ordered_living_character = {
+    limit = { 
+      is_eligible_to_pull = yes       # able to be pulled into court via hooks or invite - checks range, spouse/consort/self not landed, not ruler, not child, not priest, not imprisoned
+      is_concubine = no
+      is_married = no
+      is_betrothed = no
+
+      passes_nobilityFilter = yes
+      passes_inviteFilter = { RECRUITER = scope:actor RECRUITEE = this }
+      passes_sexFilter = yes          # check for male/female as appropriate
+      OR = {
+        AND = { exists = father father = { passes_rankFilter = yes } }
+        AND = { exists = mother mother = { passes_rankFilter = yes } }
+      }
+    }
+    order_by = { value = yyz_sort_value }
+    max = 150
+    check_range_bounds = no
+  
+    yyz_add_to_display_list = yes  # add valid characters to our display list
+  }
+}
+
+######################################
+# legendPromoter list | mode = 13
+generate_yyz_legendPromoter_list = {
+  ordered_living_character = {
+    limit = {
+      scope:actor = { is_character_interaction_valid = { recipient = prev interaction = ce1_ask_to_promote_legend_interaction } }
+      passes_rankFilter = yes
+    }
+    order_by = { value = yyz_sort_value }
+    max = 150
+    check_range_bounds = no
+  
+    yyz_add_to_display_list = yes  # add valid characters to our display list
+  }
+}
+
+######################################
+# secrets list | mode = xx
 
 # filters - rank landed/unlanded blackmailMoney linkedSecrets/soloSecrets secretSourceType
 
 
 #######################################
-# education list | mode = 14
+# education list | mode = xx
 
 # shorten primary character trait display area due to less traits, display guardian portrait and personality traits
 # 
@@ -517,9 +628,6 @@ generate_yyz_fertility_list = {
 # tradition filter
 #
 # displays a list of traditions and when selected shows the cultures that use said tradition
-
-#######################################
-# alert - army has no commander
 
 #######################################
 # alert - direct vassal has modified vassal contract

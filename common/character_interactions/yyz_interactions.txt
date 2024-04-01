@@ -1,0 +1,43 @@
+﻿
+yyz_add_kill_target = {
+  category = interaction_category_uncategorized
+  common_interaction = yes    # yyz - to avoid multiple tier context menus
+  interface_priority = 100
+  desc = yyz_add_kill_target_desc
+
+  auto_accept = yes
+  use_diplomatic_range = no
+  ignores_pending_interaction_block = yes
+  needs_recipient_to_open = no
+
+  is_shown = {
+    scope:actor = { is_ai = no } 
+    NOT = { scope:recipient = { has_character_flag = yyz_kill_target } }
+  }
+
+  on_accept = {
+    scope:recipient = { add_character_flag = yyz_kill_target }
+  }
+}
+
+yyz_remove_kill_target = {
+  category = interaction_category_uncategorized
+  common_interaction = yes    # yyz - to avoid multiple tier context menus
+  interface_priority = 100
+  desc = yyz_remove_kill_target_desc
+
+  auto_accept = yes
+  use_diplomatic_range = no
+  ignores_pending_interaction_block = yes
+  needs_recipient_to_open = no
+
+  is_shown = {
+    scope:actor = { is_ai = no } 
+    scope:recipient = { has_character_flag = yyz_kill_target }
+  }
+
+  on_accept = {
+    scope:recipient = { remove_character_flag = yyz_kill_target }
+  }
+}
+
