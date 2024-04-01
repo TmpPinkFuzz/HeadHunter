@@ -11,6 +11,9 @@ window = {
   using = Window_Decoration_Flat
   using = Window_Size_CharacterList
 
+  visible_at_creation = no
+  visible = "[GetScriptedGui('yyz_clear_list').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+
   vbox = {
     using = Window_Margins
     
@@ -201,10 +204,7 @@ window = {
         tooltip = "CLOSE_TOOLTIP"
         clicksound = "event:/SFX/UI/Generic/sfx_ui_generic_close"
 
-        datacontext = "[GetScriptedGui('clear_yyz_character_list')]"
-        onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
-        onclick = "[ExecuteConsoleCommand('gui.clearwidgets yyz_character_list_window')]"
-        onclick = "[GetVariableSystem.Clear('yyz_character_list_opened')]"
+        onclick = "[GetScriptedGui('yyz_clear_list').Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
       }
     }
 ############################
@@ -688,8 +688,8 @@ window = {
 # all filters hbox
     hbox = {
 # deferring visibility to try to avoid flickering as the controls are drawn at initial opening
-      visible_at_creation = no
-      visible = "[GetScriptedGui('open_yyz_knight_list').IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+#      visible_at_creation = no
+#      visible = "[GetScriptedGui('open_yyz_knight_list').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
       margin_left = 4
       layoutpolicy_horizontal = expanding
       text_single = {

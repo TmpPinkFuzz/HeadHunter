@@ -172,9 +172,6 @@ types yyz_character_list_types {
     block "cmd_key" {
       shortcut = "NO_DEFAULT_KEY"
     }
-    
-    onclick = "[ExecuteConsoleCommand( Select_CString( GetVariableSystem.Exists('yyz_character_list_window'), '', 'gui.createwidget gui/yyz_gui.gui yyz_character_list_window' ) )]"
-    onclick = "[GetVariableSystem.Set('yyz_character_list_opened', 'true')]"
     onclick = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
   }
 
@@ -230,7 +227,6 @@ types yyz_character_list_types {
     block "sort_buttons"
     {
       yyz_hbox_list_sort_buttons = {
-#        visible = "[GetScriptedGui( 'clear_yyz_character_list' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
         layoutpolicy_horizontal = expanding
       }
     }
@@ -247,7 +243,7 @@ types yyz_character_list_types {
           vbox = {                
             name = "characters_grid"
             datamodel = "[GetPlayer.MakeScope.GetList('yyz_list')]"
-            visible = "[GetScriptedGui('yyz_window').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+#            visible = "[GetScriptedGui('yyz_window').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
             layoutpolicy_horizontal = expanding
              
             item = {

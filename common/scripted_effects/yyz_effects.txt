@@ -4,22 +4,21 @@
 #####################################################################################
 yyz_add_to_display_list = {
   save_scope_as = recipient
-#  set_variable = { name = sort_key value = yyz_sort_key } 
-#  set_variable = { name = sort_value value = yyz_sort_value } 
-  if = {
-    limit = {
-      always = yes
-    }
+#  if = {
+#    limit = {
+#      always = yes
+#    }
     root = {
       add_to_variable_list = {
         name = yyz_list
         target = scope:recipient
       }
     }
-  }
+#  }
 }
 
 reset_filters = {
+  debug_log = "*** reset filters ***" 
   set_variable = { name = yyz_filterSex               value = FILTER_SEX_BOTH }
   set_variable = { name = yyz_filterMarital           value = FILTER_MARITAL_BOTH }
   set_variable = { name = yyz_filterNobility          value = FILTER_NOBILITY_BOTH }
@@ -148,8 +147,9 @@ toggle_variable_linked_pair = {
 # FUNCTIONALITY EFFECTS
 #####################################################################################
 yyz_generate_list = {
+  debug_log = "*** yyz_generate_list ***"
   clear_variable_list = yyz_list
-  set_global_variable = { name = yyz_listGenerated value = 0 }   # using listGenerated variable to try to avoid flickering as the controls are drawn at initial opening
+#  set_variable = { name = yyz_listGenerated value = 0 }   # using listGenerated variable to try to avoid flickering as the controls are drawn at initial opening
   save_scope_as = actor
   switch = {
     trigger = yyz_list_mode
@@ -164,7 +164,8 @@ yyz_generate_list = {
 #    11 = { generate_yyz_artifactHolder_list = yes }
     12 = { generate_yyz_fertility_list = yes }
   }   
-  set_global_variable = { name = yyz_listGenerated value = 1 }
+  set_variable = { name = yyz_listGenerated value = 1 }
+  debug_log = "*** yyz_generate_list - setFlag ***"
 }
 
 ######################################

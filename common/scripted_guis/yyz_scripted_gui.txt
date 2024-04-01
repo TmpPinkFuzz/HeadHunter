@@ -2,13 +2,15 @@
 
 ###################################################
 # clears the character list, also exposes the is_shown trigger to indicate that the list is populated
-clear_yyz_character_list = {
+yyz_clear_list = {
   scope = player
-  is_shown = { list_size = { name = yyz_list value > 0 } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
-  effect = { clear_yyz_list = yes }
+  is_shown = { yyz_listGenerated = 1 }
+
+  effect = { 
+    clear_variable_list = yyz_list
+    set_variable = { name = yyz_listGenerated value = 0 }
+  }
 }
 
 ###################################################
@@ -17,8 +19,6 @@ yyz_canInvite = {
   scope = character
   saved_scopes = { actor }
 
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
   is_shown = { will_accept_invite_to_court = { RECRUITER = scope:actor RECRUITEE = root } }
   effect = {
 		open_interaction_window = {
@@ -34,8 +34,6 @@ yyz_canInvite = {
 yyz_currencyPanel = {
   scope = player
 
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
   is_shown = {
     OR = {
       yyz_currency_details_option = DETAILS_PANEL_ALWAYS
@@ -59,8 +57,6 @@ yyz_currencyPanel = {
 yyz_speedPanel = {
   scope = player
 
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
   is_shown = {
     OR = {
       yyz_speed_details_option = DETAILS_PANEL_ALWAYS
@@ -84,8 +80,6 @@ yyz_settings = {
   scope = player
 #  saved_scopes = { player }
 
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
   is_shown = { yyz_settingsOpen = 1 }
   effect = {
     toggle_variable = { PRIMARY = yyz_settingsOpen }
@@ -98,8 +92,6 @@ open_yyz_viceroy_list = {
   scope = player
 
   is_shown = { yyz_list_mode = MAIN_VICEROYS }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_VICEROYS }
@@ -119,9 +111,6 @@ open_yyz_viceroy_list = {
 # switches the list to Dynasty mode and populates it with the females only filter set
 open_yyz_femaleDynasty_list = {
   scope = player
-  is_shown = { always = yes  }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_DYNASTY }
@@ -143,9 +132,6 @@ open_yyz_femaleDynasty_list = {
 # switches the list to Dynasty mode and populates it with the filter set to males only
 open_yyz_maleDynasty_list = {
   scope = player
-  is_shown = { always = yes  }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_DYNASTY }
@@ -167,9 +153,8 @@ open_yyz_maleDynasty_list = {
 # switches the list to Dynasty mode and populates it - entry point for the default shortcut key ( ctrl+y )
 open_yyz_dynasty_list = {
   scope = player
+
   is_shown = { yyz_list_mode = MAIN_DYNASTY }
-  is_valid = { always = yes }
-  ai_is_valid = { always = no  }
 
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_DYNASTY }
@@ -190,9 +175,8 @@ open_yyz_dynasty_list = {
 # switches the list to Knights mode and populates it 
 open_yyz_knight_list = {
   scope = player
+
   is_shown = { yyz_list_mode = MAIN_KNIGHTS }
-  is_valid = { yyz_listGenerated = 1 }
-  ai_is_valid = { always = no  }
   effect = {
     debug_log = "*** starting knights ***"
     set_global_variable = { name = yyz_list_mode value = MAIN_KNIGHTS }
@@ -216,10 +200,8 @@ open_yyz_knight_list = {
 # switches the list to Organizers mode and populates it
 open_yyz_specialOrganizers_list = {
   scope = player
-  is_shown = { yyz_list_mode = MAIN_ORGANIZERS }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_list_mode = MAIN_ORGANIZERS }
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_ORGANIZERS }
 
@@ -239,10 +221,8 @@ open_yyz_specialOrganizers_list = {
 # switches the list to killTarget mode and populates it
 open_yyz_killTarget_list = {
   scope = player
-  is_shown = { yyz_list_mode = MAIN_KILL_TARGETS }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_list_mode = MAIN_KILL_TARGETS }
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_KILL_TARGETS }
 
@@ -262,11 +242,10 @@ open_yyz_killTarget_list = {
 # switches the list to Court Positions mode and populates it
 open_yyz_courtPositions_list = {
   scope = player
-  is_shown = { yyz_list_mode = MAIN_COURT_POS }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_list_mode = MAIN_COURT_POS }
   effect = {
+    debug_log = "*** open_yyz_courtPositions_list ***"
     set_global_variable = { name = yyz_list_mode value = MAIN_COURT_POS }
 # mode defaults
     set_variable = { name = yyz_modeCourtPosition value = 2 }
@@ -279,7 +258,7 @@ open_yyz_courtPositions_list = {
     set_global_variable = { name = yyz_sort_desc          value = 0 }
 
 # generate list
-    yyz_generate_list = yes  
+    yyz_generate_list = yes
   }
 }
 
@@ -287,10 +266,8 @@ open_yyz_courtPositions_list = {
 # switches the list to Gold mode and populates it with criminal gold filters 
 open_yyz_criminalGold_list = {
   scope = player
-  is_shown = { yyz_list_mode = MAIN_GOLD }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_list_mode = MAIN_GOLD }
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_GOLD }
 
@@ -312,10 +289,8 @@ open_yyz_criminalGold_list = {
 # switches the list to Gold mode and populates it with old money filters 
 open_yyz_oldMoney_list = {
   scope = player
-  is_shown = { yyz_list_mode = MAIN_GOLD }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_list_mode = MAIN_GOLD }
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_GOLD }
 
@@ -338,10 +313,8 @@ open_yyz_oldMoney_list = {
 # switches the list to Inspiration mode and populates it
 open_yyz_inspiration_list = {
   scope = player
-  is_shown = { yyz_list_mode = MAIN_INSPIRATION }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_list_mode = MAIN_INSPIRATION }
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_INSPIRATION }
 # filters
@@ -360,9 +333,6 @@ open_yyz_inspiration_list = {
 # artifact holder mode - WIP
 open_yyz_artifactHolder_list = {
   scope = player
-  is_shown = { always = yes  }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
   effect = {
     set_variable = { name = yyz_list_mode value = 11 }
@@ -374,10 +344,8 @@ open_yyz_artifactHolder_list = {
 # switches the list to Fertility mode and populates it
 open_yyz_fertility_list = {
   scope = player
-  is_shown = { yyz_list_mode = MAIN_FERTILITY }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_list_mode = MAIN_FERTILITY }
   effect = {
     set_global_variable = { name = yyz_list_mode value = MAIN_FERTILITY }
 # filters
@@ -398,10 +366,8 @@ open_yyz_fertility_list = {
 
 yyz_filterSexMale_toggle = {
   scope = player
-  is_shown = { NOT = { yyz_filterSex = FILTER_SEX_FEMALE } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { NOT = { yyz_filterSex = FILTER_SEX_FEMALE } }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterSex VAL = FILTER_SEX_FEMALE }
     yyz_generate_list = yes  
@@ -410,10 +376,8 @@ yyz_filterSexMale_toggle = {
 
 yyz_filterSexFemale_toggle = {
   scope = player
-  is_shown = { NOT = { yyz_filterSex = FILTER_SEX_MALE } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { NOT = { yyz_filterSex = FILTER_SEX_MALE } }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterSex VAL = FILTER_SEX_MALE }
     yyz_generate_list = yes  
@@ -422,10 +386,8 @@ yyz_filterSexFemale_toggle = {
 
 yyz_filterWhereNot_toggle = {
   scope = player
-  is_shown = { yyz_filterWhereNot = 1 }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_filterWhereNot = 1 }
   effect = {
     toggle_variable = { PRIMARY = yyz_filterWhereNot }
     yyz_generate_list = yes  
@@ -434,10 +396,8 @@ yyz_filterWhereNot_toggle = {
 
 yyz_filterWhereRealm_toggle = {
   scope = player
-  is_shown = { yyz_filterWhere = FILTER_WHERE_REALM }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_filterWhere = FILTER_WHERE_REALM }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterWhere VAL = FILTER_WHERE_REALM }
     yyz_generate_list = yes  
@@ -446,10 +406,8 @@ yyz_filterWhereRealm_toggle = {
 
 yyz_filterWhereCourt_toggle = {
   scope = player
-  is_shown = { yyz_filterWhere = FILTER_WHERE_COURT }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { yyz_filterWhere = FILTER_WHERE_COURT }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterWhere VAL = FILTER_WHERE_COURT }
     yyz_generate_list = yes  
@@ -458,10 +416,8 @@ yyz_filterWhereCourt_toggle = {
 
 yyz_filterHooked_toggle = {
   scope = player
-  is_shown = { NOT = { yyz_filterHooked = FILTER_HOOKED_NOT } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { NOT = { yyz_filterHooked = FILTER_HOOKED_NOT } }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterHooked VAL = FILTER_HOOKED_HOOK }
     yyz_generate_list = yes  
@@ -470,10 +426,8 @@ yyz_filterHooked_toggle = {
 
 yyz_filterHookedNot_toggle = {
   scope = player
-  is_shown = { NOT = { yyz_filterHooked = FILTER_HOOKED_HOOK } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { NOT = { yyz_filterHooked = FILTER_HOOKED_HOOK } }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterHooked VAL = FILTER_HOOKED_NOT }
     yyz_generate_list = yes  
@@ -482,10 +436,8 @@ yyz_filterHookedNot_toggle = {
 
 yyz_filterMaritalMarried_toggle = {
   scope = player
-  is_shown = { NOT = { yyz_filterMarital = FILTER_MARITAL_UNMARRIED } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { NOT = { yyz_filterMarital = FILTER_MARITAL_UNMARRIED } }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterMarital VAL = FILTER_MARITAL_UNMARRIED }
     yyz_generate_list = yes  
@@ -494,10 +446,8 @@ yyz_filterMaritalMarried_toggle = {
 
 yyz_filterMaritalUnmarried_toggle = {
   scope = player
-  is_shown = { NOT = { yyz_filterMarital = FILTER_MARITAL_MARRIED } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
+  is_shown = { NOT = { yyz_filterMarital = FILTER_MARITAL_MARRIED } }
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterMarital VAL = FILTER_MARITAL_MARRIED }
     yyz_generate_list = yes  
@@ -506,9 +456,8 @@ yyz_filterMaritalUnmarried_toggle = {
 
 yyz_filterNobilityNoble_toggle = {
   scope = player
+
   is_shown = { NOT = { yyz_filterNobility = FILTER_NOBILITY_LOWBORN } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterNobility VAL = FILTER_NOBILITY_LOWBORN }
@@ -518,9 +467,8 @@ yyz_filterNobilityNoble_toggle = {
 
 yyz_filterNobilityLowborn_toggle = {
   scope = player
+
   is_shown = { NOT = { yyz_filterNobility = FILTER_NOBILITY_NOBLE } }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
   effect = {
     toggle_variable_val = { PRIMARY = yyz_filterNobility VAL = FILTER_NOBILITY_NOBLE }
@@ -530,9 +478,8 @@ yyz_filterNobilityLowborn_toggle = {
 
 yyz_filterInvite_toggle = {
   scope = player
+
   is_shown = { yyz_filterInvite = 1 }
-  is_valid = { always = yes  }
-  ai_is_valid = { always = no  }
 
   effect = {
     toggle_variable = { PRIMARY = yyz_filterInvite }
