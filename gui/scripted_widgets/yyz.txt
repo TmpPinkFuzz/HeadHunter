@@ -1,0 +1,2 @@
+﻿
+gui/yyz_buttons.gui = yyz_cmd_buttons
