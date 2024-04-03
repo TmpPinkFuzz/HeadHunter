@@ -175,6 +175,7 @@ yyz_filterOrgSpeed                    = { value = 0 if = { limit = { exists = va
 yyz_filterUnhealthy                   = { value = 0 if = { limit = { exists = var:yyz_filterUnhealthy } add = var:yyz_filterUnhealthy } }
 yyz_filterCriminal                    = { value = 0 if = { limit = { exists = var:yyz_filterCriminal } add = var:yyz_filterCriminal } }
 yyz_filterHeirless                    = { value = 0 if = { limit = { exists = var:yyz_filterHeirless } add = var:yyz_filterHeirless } }
+yyz_filterAcceptance                  = { value = 0 if = { limit = { exists = var:yyz_filterAcceptance } add = var:yyz_filterAcceptance } }
 
 yyz_filterAptitude                    = { value = FILTER_APTITUDE_EXCELLENT if = { limit = { exists = global_var:yyz_filterAptitude } value = global_var:yyz_filterAptitude } }  # forcing default of excellent if we have no value
 
@@ -238,6 +239,11 @@ yyz_siege_speed = {
   if = { limit = { dynasty ?= { has_dynasty_perk = fp1_pillage_legacy_5 } }                 add = { value = 25  desc = fp1_pillage_legacy_5_name } }
 #  if = { limit = { has_trait = education_martial_5 }                                        add = { value = 50  desc = trait_education_martial_5 } }
 }
+
+yyz_filterAcceptance_inc5  = { value = yyz_filterAcceptance  add =   5  max = 100 }
+yyz_filterAcceptance_inc25 = { value = yyz_filterAcceptance  add =  25  max = 100 }
+yyz_filterAcceptance_dec5  = { value = yyz_filterAcceptance  add =  -5  min =   0 }
+yyz_filterAcceptance_dec25 = { value = yyz_filterAcceptance  add = -25  min =   0 }
 
 ####################################################
 # determines the sort key value for an item
@@ -353,14 +359,6 @@ yyz_legendPromoter_accept_chance = {
     add = 40
     desc = TRADE_GOLD_FOR_BETTER_AI_ACCEPTANCE_TT
   }
-  add = {
-		opinion_modifier = {
-			who = scope:recipient
-			opinion_target = scope:actor
-			multiplier = 1
-			desc = AI_OPINION_REASON
-		}
-  }
   ## Opinion
   # Do they like you?
   if = {
@@ -458,5 +456,7 @@ yyz_legendPromoter_accept_chance = {
   max = 100
   min = 0
 }
+
+
   # text_single = { text = "[GuiScope.SetRoot( Character.MakeScope).AddScope( 'actor', GetPlayer.MakeScope ).ScriptValue('yyz_centerPanelValue')]" }
   # yyz_content_mode = { value = 0 if = { limit = { exists = var:yyz_content_mode } add = var:yyz_content_mode } }

@@ -178,6 +178,43 @@ yyz_filterRank_emperor = {
   }
 }
 
+yyz_filterAcceptance_dec = {
+  scope = player
+  saved_scopes = { rclick }
+
+  is_shown = { always = yes }
+  is_valid = { yyz_filterAcceptance > 0 }
+
+  effect = {
+    if = {
+      limit = { scope:rclick ?= root }
+      set_variable = { name = yyz_filterAcceptance value = yyz_filterAcceptance_dec25 }
+    }
+    else = {
+      set_variable = { name = yyz_filterAcceptance value = yyz_filterAcceptance_dec5 }
+    }  
+    yyz_generate_list = yes  
+  }
+}
+
+yyz_filterAcceptance_inc = {
+  scope = player
+  saved_scopes = { rclick }
+
+  is_shown = { always = yes }
+  is_valid = { yyz_filterAcceptance < 100 }
+
+  effect = {
+    if = {
+      limit = { scope:rclick ?= root }
+      set_variable = { name = yyz_filterAcceptance value = yyz_filterAcceptance_inc25 }
+    }
+    else = {
+      set_variable = { name = yyz_filterAcceptance value = yyz_filterAcceptance_inc5 }
+    }  
+    yyz_generate_list = yes  
+  }
+}
 
 yyz_filterInspirationWeapon_toggle = {
   scope = player

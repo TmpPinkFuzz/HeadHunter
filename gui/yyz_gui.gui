@@ -516,6 +516,7 @@ window = {
         visible = "[GetScriptedGui('open_yyz_schemeTarget_list').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 
         using = filter_rank
+        using = filter_acceptance
         expand = {}
       }
 
@@ -539,6 +540,7 @@ window = {
         visible = "[GetScriptedGui('open_yyz_legendPromoter_list').IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
 
         using = filter_rank
+        using = filter_acceptance
         expand = {}
       }
 

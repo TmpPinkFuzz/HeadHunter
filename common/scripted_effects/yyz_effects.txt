@@ -42,39 +42,39 @@ yyz_legendPromoter_effect = {
 
 reset_filters = {
   debug_log = "*** reset filters ***" 
-  set_variable = { name = yyz_filterSex               value = FILTER_SEX_BOTH }
-  set_variable = { name = yyz_filterMarital           value = FILTER_MARITAL_BOTH }
-  set_variable = { name = yyz_filterNobility          value = FILTER_NOBILITY_BOTH }
-  set_variable = { name = yyz_filterHooked            value = FILTER_HOOKED_BOTH }
-  set_variable = { name = yyz_filterWhere             value = FILTER_WHERE_NONE }
-  set_variable = { name = yyz_filterWhereNot          value = 0 }
-  set_variable = { name = yyz_filterInvite            value = 0 }
-  set_variable = { name = yyz_filterOrgSiege          value = 0 }
-  set_variable = { name = yyz_filterOrgReaver         value = 0 }
-  set_variable = { name = yyz_filterOrgWinter         value = 0 }
-  set_variable = { name = yyz_filterOrgLogi           value = 0 }
-  set_variable = { name = yyz_filterOrgSpeed          value = 30 }
-  set_variable = { name = yyz_filterUnhealthy         value = 0 }
-  set_variable = { name = yyz_filterCriminal          value = 0 }
-  set_variable = { name = yyz_filterHeirless          value = 0 }
+  set_variable = { name = yyz_filterSex                      value = FILTER_SEX_BOTH }
+  set_variable = { name = yyz_filterMarital                  value = FILTER_MARITAL_BOTH }
+  set_variable = { name = yyz_filterNobility                 value = FILTER_NOBILITY_BOTH }
+  set_variable = { name = yyz_filterHooked                   value = FILTER_HOOKED_BOTH }
+  set_variable = { name = yyz_filterWhere                    value = FILTER_WHERE_NONE }
+  set_variable = { name = yyz_filterWhereNot                 value = 0 }
+  set_variable = { name = yyz_filterInvite                   value = 0 }
+  set_variable = { name = yyz_filterOrgSiege                 value = 0 }
+  set_variable = { name = yyz_filterOrgReaver                value = 0 }
+  set_variable = { name = yyz_filterOrgWinter                value = 0 }
+  set_variable = { name = yyz_filterOrgLogi                  value = 0 }
+  set_variable = { name = yyz_filterOrgSpeed                 value = 30 }
+  set_variable = { name = yyz_filterUnhealthy                value = 0 }
+  set_variable = { name = yyz_filterCriminal                 value = 0 }
+  set_variable = { name = yyz_filterHeirless                 value = 0 }
+  set_variable = { name = yyz_filterAcceptance               value = 80 }
 
-  set_global_variable = { name = yyz_filterRank       value = FILTER_RANK_KING }
+  set_global_variable = { name = yyz_filterRank              value = FILTER_RANK_KING }
 
-#  set_variable = { name = yyz_filterScheme            value = FILTER_SCHEME_ROMANCE }
-#  set_variable = { name = yyz_filterXXX          value = 0 }
-#  set_variable = { name = yyz_filterXXX          value = 0 }
+#  set_variable = { name = yyz_filterScheme                   value = FILTER_SCHEME_ROMANCE }
+#  set_variable = { name = yyz_filterXXX                      value = 0 }
+#  set_variable = { name = yyz_filterXXX                      value = 0 }
 
-
-  set_variable = { name = yyz_filterInspirationWeapon    value = 1 }       
-  set_variable = { name = yyz_filterInspirationArmor     value = 1 }       
-  set_variable = { name = yyz_filterInspirationBook      value = 1 }       
-  set_variable = { name = yyz_filterInspirationWeaver    value = 1 }       
-  set_variable = { name = yyz_filterInspirationArtisan   value = 1 }       
-  set_variable = { name = yyz_filterInspirationSmith     value = 1 }       
-  set_variable = { name = yyz_filterInspirationAlchemy   value = 1 }       
-  set_variable = { name = yyz_filterInspirationAdventure value = 1 }       
-  set_variable = { name = yyz_filterInspirationQuality   value = 12 }
-  set_variable = { name = yyz_filterInspirationUnsponsored  value = 0 }
+  set_variable = { name = yyz_filterInspirationWeapon        value = 1 }       
+  set_variable = { name = yyz_filterInspirationArmor         value = 1 }       
+  set_variable = { name = yyz_filterInspirationBook          value = 1 }       
+  set_variable = { name = yyz_filterInspirationWeaver        value = 1 }       
+  set_variable = { name = yyz_filterInspirationArtisan       value = 1 }       
+  set_variable = { name = yyz_filterInspirationSmith         value = 1 }       
+  set_variable = { name = yyz_filterInspirationAlchemy       value = 1 }       
+  set_variable = { name = yyz_filterInspirationAdventure     value = 1 }       
+  set_variable = { name = yyz_filterInspirationQuality       value = 12 }
+  set_variable = { name = yyz_filterInspirationUnsponsored   value = 0 }
 
   set_variable = { name = yyz_modeAccolade_retinue           value = 0 }
 
@@ -489,12 +489,12 @@ generate_yyz_artifactHolder_list = {
       passes_sexFilter = yes                                     # check for male/female as appropriate
       passes_nobilityFilter = yes                                # check for noble/lowborn/claims
       passes_inviteFilter = { RECRUITER = scope:actor RECRUITEE = this }
-      passes_landedFilter = yes
-      any_character_artifact = {
-        passes_artifactType_filter      = yes
-        passes_artifactAttribute_filter = yes
-        passes_artifactRarity_filter    = yes
-      }
+#      passes_landedFilter = yes
+#      any_character_artifact = {
+#        passes_artifactType_filter      = yes
+#        passes_artifactAttribute_filter = yes
+#        passes_artifactRarity_filter    = yes
+#      }
     }
     order_by = { value = yyz_sort_value }
     max = 100
@@ -551,6 +551,7 @@ generate_yyz_schemeTarget_list = {
       in_diplomatic_range = scope:actor
 
       passes_romanceRankFilter = yes
+#      passes_acceptanceFilter = yes
     }
 ##      NOT = { has_council_position = councillor_court_chaplain } # no priests
     order_by = { value = yyz_sort_value }

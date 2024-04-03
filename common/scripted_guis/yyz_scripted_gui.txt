@@ -30,27 +30,6 @@ yyz_canInvite = {
 }
 
 ###################################################
-#
-yyz_gold_gold = {
-  scope = character
-  saved_scopes = { actor }
-
-  is_shown = {
-#    always = no
-    will_accept_invite_to_court = { RECRUITER = scope:actor RECRUITEE = root } 
-    yyz_list_mode = MAIN_GOLD
-    scope:actor = { yyz_filterHeirless = 1 }
-  }
-  effect = {
-		open_interaction_window = {
-			interaction = invite_for_gold
-			actor = scope:actor
-			recipient = root
-		}
-  }
-}
-
-###################################################
 # used to control the visibility of the currency detail panel on the character display
 yyz_currencyPanel = {
   scope = player
@@ -231,7 +210,7 @@ open_yyz_specialOrganizers_list = {
 
 # sort defaults
     set_global_variable = { name = yyz_sort_key           value = SORT_KEY_HEALTH }
-    set_global_variable = { name = yyz_sort_desc          value = 0 }
+    set_global_variable = { name = yyz_sort_desc          value = 1 }
 
 # generate list
     yyz_generate_list = yes  

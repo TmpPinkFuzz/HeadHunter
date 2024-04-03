@@ -98,7 +98,9 @@ passes_romanceRankFilter = {
 }
 
 passes_romanceAcceptanceFilter = {
-  yyz_romance_success_chance >= 100
+  scope:actor = {
+    yyz_romance_success_chance >= yyz_filterAcceptance
+  }
 
   NOT = {
     #Have I been blocked from targeting this character? #Permanent

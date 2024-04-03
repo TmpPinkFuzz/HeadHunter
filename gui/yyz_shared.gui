@@ -30,6 +30,7 @@ template yyz_invite_button
   }
 }
 
+# override yyz_pin_unpin to add invite for gold
 template yyz_pin_unpin
 {
   button_pin = {
@@ -206,6 +207,35 @@ template filter_rank
   spacer = { size = { 6 0 } }
 }
 
+template filter_acceptance
+{
+  yyz_button_dual_click = {
+    size = { 32 32 }
+    name = "btn_filter_acceptance_dec"
+    fontsize = 24
+    text = YYZ_FILTER_ACCEPTANCE_DEC
+    datacontext = "[GetScriptedGui('yyz_filterAcceptance_dec')]"
+    tooltip = YYZ_FILTER_ACCEPTANCE_DEC_TT
+    using = tooltip_nw
+  }
+  text_single = {
+    size = { 32 32 }
+    fontsize = 18
+    text = YYZ_FILTER_ACCEPTANCE 
+    tooltip = YYZ_FILTER_ACCEPTANCE_TT
+  }
+  yyz_button_dual_click = {
+    size = { 32 32 }
+    name = "btn_filter_acceptance_inc"
+    fontsize = 24
+    text = YYZ_FILTER_ACCEPTANCE_INC
+    datacontext = "[GetScriptedGui('yyz_filterAcceptance_inc')]"
+    tooltip = YYZ_FILTER_ACCEPTANCE_INC_TT
+    using = tooltip_ne
+  }
+  spacer = { size = { 6 0 } }
+}
+
 types yyz_ui_types {
   
   type yyz_header_text = text_single {
@@ -259,6 +289,16 @@ types yyz_ui_types {
     visible = "[ScriptedGui.IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
     down    = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
   }
+
+  type yyz_button_dual_click = button_standard_hover {
+    button_ignore = none
+    onclick       = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'rclick', GetNullCharacter.MakeScope ).End )]"
+    onrightclick  = "[ScriptedGui.Execute( GuiScope.SetRoot( GetPlayer.MakeScope ).AddScope( 'rclick', GetPlayer.MakeScope ).End )]"
+    visible       = "[ScriptedGui.IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+    enabled       = "[ScriptedGui.IsValid( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
+    rightclicksound = "event:/SFX/UI/Generic/sfx_ui_generic_select"
+  }
+
 
   type HeadHunter_invoke_button = window {
     movable = yes
@@ -580,10 +620,10 @@ types yyz_vanilla_overrides {
             vbox = {    # center info panel
               layoutpolicy_horizontal = preferred
               text_single = { 
-                text = "[GuiScope.SetRoot( Character.MakeScope).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', Character.MakeScope ).ScriptValue('yyz_centerPanelValue')]%" 
+                text = "YYZ_CENTER_PANEL_VALUE" 
                 fontsize = 18
               }
-              tooltip = "[GuiScope.SetRoot( Character.MakeScope ).AddScope( 'actor', GetPlayer.MakeScope ).AddScope( 'recipient', Character.MakeScope ).GetScriptValueDesc('yyz_centerPanelValue')]"
+              tooltip = "YYZ_CENTER_PANEL_VALUE_TT"
               visible = "[GetScriptedGui( 'yyz_centerPanel' ).IsShown( GuiScope.SetRoot( GetPlayer.MakeScope ).End )]"
             }
             vboxEx = {

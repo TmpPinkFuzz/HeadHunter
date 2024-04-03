@@ -1,4 +1,20 @@
 ﻿
+yyz_romance_opinion_modifier = {
+  value = 0
+  if = {
+    limit = { scope:recipient = { save_temporary_opinion_value_as = { name = character_opinion target = scope:actor } } }
+    add = {
+      value = scope:character_opinion
+      multiply = 1.5
+      divide = 5
+      floor = yes
+    }
+  }
+  multiply = 5
+  min = -50
+  max = 50
+}
+
 yyz_romance_success_chance = {
   value = 0
 
@@ -99,28 +115,13 @@ yyz_romance_success_chance = {
   }
 
   #Opinion of owner
-  if = {
-    limit = { scope:recipient = { save_temporary_opinion_value_as = { name = character_opinion target = scope:actor } } }
-    add = {
-      value = scope:character_opinion
-      desc = AI_OPINION_REASON
-      min = -50
-      max = 50
-      multiplier = 1.5
-      step = 5
-    }
-  }
+  add = yyz_romance_opinion_modifier 
+  desc = AI_OPINION_REASON
 
 #  add = yyz_romance_opinion_modifier_kludge
 
   #Trait similitarity to owner
   add = yyz_romance_compatibility_modifier_kludge
-
-#  if = {
-#    limit = { scope:recipient = { NOT = { is_theocratic_lessee = yes } }
-#    if = {
-#      limit = { scope:recipient = { personal_scheme_success_compare_target_liege_tier_trigger = yes } #Rank tier difference (unlanded character)
-#      if = {  
 
   #Rank tier difference (landed target/target whose liege doesn't care)
   if = { #3 or more higher rank
@@ -353,9 +354,9 @@ yyz_romance_success_chance = {
     }
     desc = SCHEME_SEDUCE_UNWILLING_INCEST
   }
+  #Sodomy
   if = {
     limit = {
-   #Sodomy
       scope:recipient = {
         relation_with_character_is_sodomy_in_my_or_lieges_faith_trigger = { CHARACTER = scope:actor }
         NOT = { freely_accepts_sodomy_with_trigger = { CHARACTER = scope:actor } }
@@ -365,9 +366,9 @@ yyz_romance_success_chance = {
     desc = SCHEME_SEDUCE_TABOO_SODOMY
   }
   
+  # Tradition
   if = {
     limit = {
-   # Tradition
       scope:actor = {
         has_trait = poet
         culture = {
@@ -515,66 +516,69 @@ yyz_romance_compatibility_modifier_kludge = {
   value = 0
   scope:recipient = {
     if = { limit = { trait_compatibility = { target = scope:actor value < -33 } } add = -1 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -33 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -32 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -31 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -30 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -29 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -28 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -27 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -26 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -25 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -24 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -23 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -22 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -21 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -20 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -19 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -18 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -17 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -16 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -15 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -14 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -13 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -12 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -11 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value < -10 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -9 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -8 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -7 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -6 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -5 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -4 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -3 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -2 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value <  -1 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value =  -1 } } add = -3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value =   1 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  26 } } add =  2 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  25 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  24 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  23 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  22 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  21 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  20 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  19 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  18 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  17 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  16 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  15 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  14 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  13 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  12 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  11 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >  10 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   9 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   8 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   7 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   6 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   5 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   4 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   3 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   2 } } add =  3 }
-    if = { limit = { trait_compatibility = { target = scope:actor value >   1 } } add =  3 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -32 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -31 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -30 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -29 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -28 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -27 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -26 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -25 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -24 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -23 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -22 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -21 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -20 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -19 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -18 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -17 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -16 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -15 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -14 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -13 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -12 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -11 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value < -10 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -9 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -8 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -7 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -6 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -5 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -4 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -3 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -2 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <  -1 } } add = -1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value <   0 } } add = -1 }
+
+    if = { limit = { trait_compatibility = { target = scope:actor value >   0 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  26 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  25 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  24 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  23 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  22 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  21 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  20 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  19 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  18 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  17 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  16 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  15 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  14 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  13 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  12 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  11 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >  10 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   9 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   8 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   7 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   6 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   5 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   4 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   3 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   2 } } add =  1 }
+    if = { limit = { trait_compatibility = { target = scope:actor value >   1 } } add =  1 }
   }
+  multiply = 3
+  min = -100
+  max = 80
 }
